@@ -2,6 +2,6 @@
 
 var util = require('util');
 
-module.exports = function inspect(obj, depth) {
-  return require('util').inspect(obj, false, depth || 5, true);
+module.exports = function inspect(obj, color) {
+  return util.inspect(obj, false, 5, color);
 }

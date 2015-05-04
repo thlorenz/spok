@@ -1,0 +1,90 @@
+'use strict';
+
+var test = require('tape')
+var spok = require('../')
+
+test('\nspecifications in isolation', function (t) {
+  // ranges and comparisons
+  t.ok(spok.range(0, 2)(1), 'range 0, 2, 1')
+  t.ok(spok.range(0, 2)(0), 'range 0, 2, 0')
+  t.ok(spok.range(0, 2)(2), 'range 0, 2, 2')
+  t.ok(!spok.range(0, 2)(-1), 'not range 0, 2, -1')
+  t.ok(!spok.range(0, 2)(3), 'not range 0, 2, 3')
+  t.ok(!spok.range(0, 2)(undefined), 'not range 0, 2, undefined')
+  t.ok(!spok.range(0, 2)(null), 'range 0, 2, null')
+
+
+  t.ok(spok.ge(0)(1), 'ge 0, 1')
+  t.ok(spok.ge(1)(2), 'ge 1, 2')
+  t.ok(spok.ge(1)(1), 'ge 1, 1')
+  t.ok(!spok.ge(1)(0), 'not ge 1, 0')
+  t.ok(!spok.ge(1)(null), 'not ge 1, null')
+  t.ok(!spok.ge(1)(undefined), 'not ge 1, undefined')
+
+  t.ok(spok.gt(0)(1), 'gt 0, 1')
+  t.ok(spok.gt(1)(2), 'gt 1, 2')
+  t.ok(!spok.gt(1)(1), 'not gt 1, 1')
+  t.ok(!spok.gt(1)(0), 'not gt 1, 0')
+  t.ok(!spok.gt(1)(null), 'not gt 1, null')
+  t.ok(!spok.gt(1)(undefined), 'not gt 1, undefined')
+
+  t.ok(spok.le(1)(0), 'le 1, 0')
+  t.ok(spok.le(2)(1), 'le 2, 1')
+  t.ok(spok.le(1)(1), 'le 1, 1')
+  t.ok(!spok.le(0)(1), 'not le 0, 1')
+  t.ok(!spok.le(1)(null), 'not le 1, null')
+  t.ok(!spok.le(1)(undefined), 'not le 1, undefined')
+
+  t.ok(spok.lt(1)(0), 'lt 1, 0')
+  t.ok(spok.lt(2)(1), 'lt 2, 1')
+  t.ok(!spok.lt(1)(1), 'not lt 1, 1')
+  t.ok(!spok.lt(0)(1), 'not lt 0, 1')
+  t.ok(!spok.lt(1)(null), 'not lt 1, null')
+  t.ok(!spok.lt(1)(undefined), 'not lt 1, undefined')
+
+  t.ok(spok.ne(1)(0), 'ne 1, 0')
+  t.ok(spok.ne(1)('1'), 'ne 1, \'1\'')
+  t.ok(!spok.ne(1)(1), 'not ne 1, 1')
+  t.ok(spok.ne(1)(undefined), 'ne 1, undefined')
+  t.ok(spok.ne(undefined)(1), 'ne undefined, 1')
+  t.ok(!spok.ne(undefined)(undefined), 'not ne undefined, undefined')
+
+  // types
+  t.ok(spok.type('object')({}), 'type object, {}')
+  t.ok(!spok.type('object')(1), 'not type object, {}')
+  t.ok(spok.type('object')(null), 'type object, null')
+  t.ok(!spok.type('object')(undefined), 'not type object, undefined')
+
+  t.ok(spok.number(1), 'number 1')
+  t.ok(!spok.number('1'), 'not number \'1\'')
+  t.ok(!spok.number({}), 'not number {}')
+  t.ok(!spok.number([]), 'not number []')
+  t.ok(!spok.number(null), 'not number null')
+  t.ok(!spok.number(undefined), 'not number undefined')
+
+  t.ok(spok.string('hi'), 'string \'hi\'')
+
+  t.ok(!spok.string(1), 'not string 1')
+  t.ok(!spok.string({}), 'not string {}')
+  t.ok(!spok.string([]), 'not string []')
+  t.ok(!spok.string(null), 'not string null')
+  t.ok(!spok.string(undefined), 'not string undefined')
+
+  t.ok(spok.array([]), 'array []')
+  t.ok(!spok.array({}), 'not array {}')
+  t.ok(!spok.array(undefined), 'not array undefined')
+
+  t.ok(spok.definedObject({}), 'definedObject {}')
+  t.ok(!spok.definedObject(1), 'not definedObject 1')
+  t.ok(!spok.definedObject(null), 'not definedObject null')
+  t.ok(!spok.definedObject(undefined), 'not definedObject undefined')
+
+
+  // strings
+  t.ok(spok.startsWith('hello')('hello world'), 'startsWith hello, helloWorld')
+  t.ok(!spok.startsWith('hallo')('hello world'), 'startsWith hallo, helloWorld')
+  t.ok(!spok.startsWith('hello')(null), 'startsWith hello, null')
+  t.ok(!spok.startsWith('hello')(undefined), 'startsWith hello, undefined')
+
+  t.end()
+})

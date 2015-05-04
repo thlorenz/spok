@@ -52,11 +52,20 @@ test('my object meets the specifications', function (t) {
 
     npm install spok
 
+## Why not just `deepEqual`?
+
+`deepEqual` works great for most cases, but in some cases you need more control, i.e.
+
+- values don't exactly match, but are in a given range
+- you want to provide a predicate to determine if a value is correct or not
+- you only want to check a subset of values contained in the object
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [API](#api)
+    - [spok(t, obj, specifications)](#spokt-obj-specifications)
     - [spok::array(x) → {Boolean}](#spokarrayx-→-boolean)
     - [spok::definedObject() → {Boolean}](#spokdefinedobject-→-boolean)
     - [spok::ge(n)](#spokgen)
@@ -73,8 +82,16 @@ test('my object meets the specifications', function (t) {
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-
 ## API
+
+spok provides a few common specification functions. However you can write your own functions as well, just return `true`
+if specification was satisfied and `false` if not (see example above).
+
+If you write a specification function that would be useful to others please add it along with a test and provide a PR.
+
+`spok.*` comparison function names are derived from [**bash** comparison
+operators](http://www.tldp.org/LDP/abs/html/comparison-ops.html) to make them easier to remember.
+
 
 <!-- START docme generated API please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN docme TO UPDATE -->
@@ -177,7 +194,7 @@ x: spok.array  // specifies that x should be an Array
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L202">lineno 202</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L204">lineno 204</a>
 </li>
 </ul></dd>
 </dl>
@@ -262,7 +279,7 @@ x: spok.ge(1)  // specifies that x should be &gt;=1
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L106">lineno 106</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L107">lineno 107</a>
 </li>
 </ul></dd>
 </dl>
@@ -302,7 +319,7 @@ x: spok.gt(1)  // specifies that x should be &gt;1
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L87">lineno 87</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L88">lineno 88</a>
 </li>
 </ul></dd>
 </dl>
@@ -342,7 +359,7 @@ x: spok.le(1)  // specifies that x should be &lt;=1
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L145">lineno 145</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L146">lineno 146</a>
 </li>
 </ul></dd>
 </dl>
@@ -382,7 +399,7 @@ x: spok.range(1)  // specifies that x should be &lt; 1
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L126">lineno 126</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L127">lineno 127</a>
 </li>
 </ul></dd>
 </dl>
@@ -422,7 +439,7 @@ x: spok.not(undefined)  // specifies that x should be defined
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L164">lineno 164</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L165">lineno 165</a>
 </li>
 </ul></dd>
 </dl>
@@ -432,7 +449,7 @@ x: spok.not(undefined)  // specifies that x should be defined
 </dt>
 <dd>
 <div class="description">
-<p>Specifies that the input is a number.</p>
+<p>Specifies that the input of type number and <code>isNaN(x)</code> returns <code>false</code>.</p>
 <pre><code class="lang-js">var spec = {
 x: spok.number  // specifies that x should be a Number
 }</code></pre>
@@ -462,7 +479,7 @@ x: spok.number  // specifies that x should be a Number
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L220">lineno 220</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L222">lineno 222</a>
 </li>
 </ul></dd>
 </dl>
@@ -521,7 +538,7 @@ x: spok.range(1, 2)   // specifies that x should be &gt;=1 and &lt;=2
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L66">lineno 66</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L67">lineno 67</a>
 </li>
 </ul></dd>
 </dl>
@@ -573,7 +590,7 @@ x: spok.startsWith('hello')  // specifies that x should start with 'hello'
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L274">lineno 274</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L272">lineno 272</a>
 </li>
 </ul></dd>
 </dl>
@@ -594,7 +611,7 @@ x: spok.string  // specifies that x should be a String
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L238">lineno 238</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L240">lineno 240</a>
 </li>
 </ul></dd>
 </dl>
@@ -646,7 +663,7 @@ x: spok.type('number')  // specifies that x should be a Number
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L183">lineno 183</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L184">lineno 184</a>
 </li>
 </ul></dd>
 </dl>

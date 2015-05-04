@@ -25,11 +25,11 @@ module.exports = function spok(t, obj, specifications) {
     var val = obj[k]
 
     if (typeof spec === 'object') // includes array
-      specString = insp(spec);
+      specString = insp(spec, spok.color);
     else
       specString = spec;
 
-    var msg = prefix + k + ' = ' + insp(val);
+    var msg = prefix + k + ' = ' + insp(val, spok.color);
 
     switch (typeof spec) {
       case 'function': return t.equal(!!spec(val), true, msg);
@@ -62,6 +62,7 @@ module.exports = function spok(t, obj, specifications) {
 var spok = module.exports;
 
 spok.sound = false;
+spok.color = true;
 
 /**
  * Specififies that the given number is within the given range, i.e. `min<= x <=max`.
@@ -80,7 +81,7 @@ spok.sound = false;
  */
 spok.range = function range(min, max) {
   return function checkRange(x) {
-    return min <= x && x <= max;
+    return spok.number(x) && min <= x && x <= max;
   }
 }
 
@@ -99,7 +100,7 @@ spok.range = function range(min, max) {
  */
 spok.gt = function gt(n) {
   return function checkgt(x) {
-    return x > n;
+    return spok.number(x) && x > n;
   }
 }
 
@@ -118,7 +119,7 @@ spok.gt = function gt(n) {
  */
 spok.ge = function ge(n) {
   return function checkge(x) {
-    return x >= n;
+    return spok.number(x) && x >= n;
   }
 }
 
@@ -138,7 +139,7 @@ spok.ge = function ge(n) {
  */
 spok.lt = function lt(n) {
   return function checklt(x) {
-    return x < n;
+    return spok.number(x) && x < n;
   }
 }
 
@@ -157,7 +158,7 @@ spok.lt = function lt(n) {
  */
 spok.le = function le(n) {
   return function checkle(x) {
-    return x < n;
+    return spok.number(x) && x <= n;
   }
 }
 
@@ -194,6 +195,7 @@ spok.ne = function ne(value) {
  * @param {String} t expected type
  */
 spok.type = function type(t) {
+  console.error('typeof t: %s', t)
   return function checkType(x) {
     return typeof x === t;
   }
@@ -218,7 +220,7 @@ spok.array = function array(x) {
 }
 
 /**
- * Specifies that the input is a number.
+ * Specifies that the input of type number and `isNaN(x)` returns `false`.
  *
  * ```js
  * var spec = {
@@ -232,7 +234,7 @@ spok.array = function array(x) {
  * @return {Boolean} `true` if spec is validated otherwise `false`
  */
 spok.number = function number(x) {
-  return !isNaN(x)
+  return typeof x === 'number' && !isNaN(x)
 }
 
 /**
@@ -248,9 +250,7 @@ spok.number = function number(x) {
  * @function
  * @return {Boolean} `true` if spec is validated otherwise `false`
  */
-spok.string = function string() {
-  return spok.type('string')
-}
+spok.string = spok.type('string')
 
 /**
  * Specifies that the input is an object and it is not `null`.
@@ -265,10 +265,8 @@ spok.string = function string() {
  * @function
  * @return {Boolean} `true` if spec is validated otherwise `false`
  */
-spok.definedObject = function definedObject() {
-  function checkDefinedObject(x) {
-    return spok.type('object')(x) && x !== null
-  }
+spok.definedObject = function definedObject(x) {
+  return x !== null && typeof x === 'object'
 }
 
 /**
@@ -286,7 +284,7 @@ spok.definedObject = function definedObject() {
  */
 spok.startsWith = function startsWith(what) {
   return function checkStartsWith(x) {
-    var res = x.startsWith(what)
+    var res = x && typeof x.startsWith === 'function' && x.startsWith(what)
     if (!res) console.error('%s !==\n%s', x, what)
     return res
   }
