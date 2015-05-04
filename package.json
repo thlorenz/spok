@@ -1,0 +1,49 @@
+{
+  "name": "spok",
+  "version": "0.0.0",
+  "description": "Checks a given object against a given set of specifications to keep you from writing boilerplate tests.",
+  "main": "spok.js",
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "browser": {
+    "./inspect.js": "./inspect-browser.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/thlorenz/spok.git"
+  },
+  "homepage": "https://github.com/thlorenz/spok",
+  "dependencies": {},
+  "devDependencies": {
+    "tape": "~4.0.0"
+  },
+  "keywords": [ "test", "spec", "specification", "contract", "assert", "assertion", "deepEqual" ],
+  "author": {
+    "name": "Thorsten Lorenz",
+    "email": "thlorenz@gmx.de",
+    "url": "http://thlorenz.com"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/thlorenz/spok/blob/master/LICENSE"
+  },
+  "engine": {
+    "node": ">=0.8"
+  },
+  "testling": {
+    "files": "test/*.js",
+    "browsers": [
+      "ie/8..latest",
+      "firefox/17..latest",
+      "firefox/nightly",
+      "chrome/22..latest",
+      "chrome/canary",
+      "opera/12..latest",
+      "opera/next",
+      "safari/5.1..latest",
+      "ipad/6.0..latest",
+      "iphone/6.0..latest"
+    ]
+  }
+}
