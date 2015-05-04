@@ -1,6 +1,6 @@
 {
   "name": "spok",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Checks a given object against a given set of specifications to keep you from writing boilerplate tests.",
   "main": "spok.js",
   "scripts": {
@@ -18,7 +18,15 @@
   "devDependencies": {
     "tape": "~4.0.0"
   },
-  "keywords": [ "test", "spec", "specification", "contract", "assert", "assertion", "deepEqual" ],
+  "keywords": [
+    "test",
+    "spec",
+    "specification",
+    "contract",
+    "assert",
+    "assertion",
+    "deepEqual"
+  ],
   "author": {
     "name": "Thorsten Lorenz",
     "email": "thlorenz@gmx.de",
