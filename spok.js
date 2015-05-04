@@ -77,7 +77,6 @@ spok.color = true;
  * @function
  * @param {Number} min minimum
  * @param {Number} max maximum
- * @return {function} function used by spok to check this condition
  */
 spok.range = function range(min, max) {
   return function checkRange(x) {
@@ -129,7 +128,7 @@ spok.ge = function ge(n) {
  *
  * ```js
  * var spec = {
- *  x: spok.range(1)  // specifies that x should be < 1
+ *  x: spok.lt(1)  // specifies that x should be < 1
  * }
  * ```
  *
@@ -167,7 +166,7 @@ spok.le = function le(n) {
  *
  * ```js
  * var spec = {
- *  x: spok.not(undefined)  // specifies that x should be defined
+ *  x: spok.ne(undefined)  // specifies that x should be defined
  * }
  * ```
  *
@@ -195,7 +194,6 @@ spok.ne = function ne(value) {
  * @param {String} t expected type
  */
 spok.type = function type(t) {
-  console.error('typeof t: %s', t)
   return function checkType(x) {
     return typeof x === t;
   }
@@ -212,8 +210,6 @@ spok.type = function type(t) {
  *
  * @name spok::array
  * @function
- * @param {Any} x value checked by spok to be an array when the tests run
- * @return {Boolean} `true` if spec is validated otherwise `false`
  */
 spok.array = function array(x) {
   return Array.isArray(x)
@@ -230,8 +226,6 @@ spok.array = function array(x) {
  *
  * @name spok::number
  * @function
- * @param {Any} x value checked by spok to be a number the tests run
- * @return {Boolean} `true` if spec is validated otherwise `false`
  */
 spok.number = function number(x) {
   return typeof x === 'number' && !isNaN(x)
@@ -248,7 +242,6 @@ spok.number = function number(x) {
  *
  * @name spok::string
  * @function
- * @return {Boolean} `true` if spec is validated otherwise `false`
  */
 spok.string = spok.type('string')
 
@@ -263,7 +256,6 @@ spok.string = spok.type('string')
  *
  * @name spok::definedObject
  * @function
- * @return {Boolean} `true` if spec is validated otherwise `false`
  */
 spok.definedObject = function definedObject(x) {
   return x !== null && typeof x === 'object'
