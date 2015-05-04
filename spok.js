@@ -271,6 +271,8 @@ spok.definedObject = function definedObject(x) {
 
 /**
  * Specifies that the string starts with the specified substring.
+ * 
+ * **NOTE**: only available with io.js which has an ES6 `startsWith` function
  *
  * ```js
  * var spec = {

@@ -81,10 +81,12 @@ test('\nspecifications in isolation', function (t) {
 
 
   // strings
+  if (typeof ''.startsWith === 'function') {
   t.ok(spok.startsWith('hello')('hello world'), 'startsWith hello, helloWorld')
   t.ok(!spok.startsWith('hallo')('hello world'), 'startsWith hallo, helloWorld')
   t.ok(!spok.startsWith('hello')(null), 'startsWith hello, null')
   t.ok(!spok.startsWith('hello')(undefined), 'startsWith hello, undefined')
+  }
 
   t.end()
 })

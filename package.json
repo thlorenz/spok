@@ -4,7 +4,12 @@
   "description": "Checks a given object against a given set of specifications to keep you from writing boilerplate tests.",
   "main": "spok.js",
   "scripts": {
-    "test": "tape test/*.js"
+    "test-main": "tape test/*.js",
+    "test-0.10": "nave use 0.10 npm run test-main",
+    "test-0.12": "nave use 0.12 npm run test-main",
+    "test-latest": "nave use latest npm run test-main",
+    "test-all": "npm run test-main && npm run test-0.10 && npm run test-0.12 && npm run test-latest",
+    "test": "if [ -e $TRAVIS ]; then npm run test-all; else git checkout master && npm run test-main; fi"
   },
   "browser": {
     "./inspect.js": "./inspect-browser.js"
@@ -16,6 +21,7 @@
   "homepage": "https://github.com/thlorenz/spok",
   "dependencies": {},
   "devDependencies": {
+    "nave": "~0.5.1",
     "tape": "~4.0.0"
   },
   "keywords": [

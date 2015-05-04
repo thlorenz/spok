@@ -6,7 +6,7 @@ var spok = require('../')
 var equalCalls;
 var deepEqualCalls;
 
-var assert = { 
+var assert = {
     equal: function (actual, expected, msg) {
       equalCalls.push({ actual: actual, expected: expected, msg: msg })
     }
@@ -35,7 +35,6 @@ test('\nmultiple specifications all valid', function (t) {
     , object       : { foo: 'bar' }
     , three        : 3
     , four         : 4
-    , helloWorld   : 'hello world'
     , anyNum       : 999
     , anotherNum   : 888
     , anArray      : [ 1, 2 ]
@@ -52,7 +51,6 @@ test('\nmultiple specifications all valid', function (t) {
     , object       : { foo: 'bar' }
     , three        : spok.range(2, 4)
     , four         : spok.lt(5)
-    , helloWorld   : spok.startsWith('hello')
     , anArray      : spok.array
     , anotherArray : [ 1, 2, 3 ]
     , anObject     : spok.ne(undefined)
@@ -72,16 +70,13 @@ test('\nmultiple specifications all valid', function (t) {
       { actual: true, expected: true, msg: 'spok-test-valid.four = 4' },
       { actual: true,
         expected: true,
-        msg: 'spok-test-valid.helloWorld = \'hello world\'' },
-      { actual: true,
-        expected: true,
         msg: 'spok-test-valid.anArray = [ 1, 2 ]' },
       { actual: true, expected: true, msg: 'spok-test-valid.anObject = {}' },
       { actual: 1, expected: 1, msg: 'spokie dokie' } ]
     , 'spok performs the expected equality checks'
   )
 
-  t.deepEqual(deepEqualCalls, 
+  t.deepEqual(deepEqualCalls,
     [ { actual: { foo: 'bar' },
         expected: { foo: 'bar' },
         msg: 'spok-test-valid.object = { foo: \'bar\' }' },
@@ -92,7 +87,7 @@ test('\nmultiple specifications all valid', function (t) {
   )
 
   t.end()
-  
+
 })
 
 test('\nmultiple specifications some  invalid', function (t) {
@@ -118,7 +113,7 @@ test('\nmultiple specifications some  invalid', function (t) {
 
   spok(assert, object, specs);
 
-  t.deepEqual(equalCalls, 
+  t.deepEqual(equalCalls,
     [ { actual: 1, expected: 1, msg: 'spok: spok-test-invalid' },
       { actual: true,
         expected: true,
@@ -136,7 +131,7 @@ test('\nmultiple specifications some  invalid', function (t) {
     , 'spok performs the expected equality checks'
   )
 
-  t.deepEqual(deepEqualCalls, 
+  t.deepEqual(deepEqualCalls,
     [ { actual: { foo: 'bar' },
         expected: { foo: 'bas' },
         msg: 'spok-test-invalid.object = { foo: \'bar\' }' },

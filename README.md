@@ -560,7 +560,8 @@ Type
 </dt>
 <dd>
 <div class="description">
-<p>Specifies that the string starts with the specified substring.</p>
+<p>Specifies that the string starts with the specified substring.
+<strong>NOTE</strong>: only available with io.js which has an ES6 <code>startsWith</code> function</p>
 <pre><code class="lang-js">var spec = {
 x: spok.startsWith('hello')  // specifies that x should start with 'hello'
 }</code></pre>
