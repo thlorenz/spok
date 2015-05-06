@@ -45,7 +45,7 @@ module.exports = function spok(t, obj, specifications) {
   }
 
   if (specifications.$topic) {
-    prefix = specifications.$topic + '.';
+    prefix = '··· ';
     // print indicator that a specific spec started being evaluated
     t.equal(1, 1, 'spok: ' + specifications.$topic)
   }
