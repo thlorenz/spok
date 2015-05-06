@@ -181,6 +181,58 @@ spok.ne = function ne(value) {
 }
 
 /**
+ * Specifies that the value is greater than zero
+ *
+ * ```js
+ * var spec = {
+ *   x: spok.gtz
+ * }
+ * ```
+ * @name spok::gtz
+ * @function
+ */
+spok.gtz = spok.gt(0)
+
+/**
+ * Specifies that the value is greater or equal zero
+ *
+ * ```js
+ * var spec = {
+ *   x: spok.gez
+ * }
+ * ```
+ * @name spok::gez
+ * @function
+ */
+spok.gez = spok.ge(0)
+
+/**
+ * Specifies that the value is less than zero
+ *
+ * ```js
+ * var spec = {
+ *   x: spok.ltz
+ * }
+ * ```
+ * @name spok::ltz
+ * @function
+ */
+spok.ltz = spok.lt(0)
+
+/**
+ * Specifies that the value is less or equal zero
+ *
+ * ```js
+ * var spec = {
+ *   x: spok.lez
+ * }
+ * ```
+ * @name spok::lez
+ * @function
+ */
+spok.lez = spok.le(0)
+
+/**
  * Specifies that the input is of a given type.
  *
  * ```js
@@ -263,7 +315,7 @@ spok.definedObject = function definedObject(x) {
 
 /**
  * Specifies that the string starts with the specified substring.
- * 
+ *
  * **NOTE**: only available with io.js which has an ES6 `startsWith` function
  *
  * ```js

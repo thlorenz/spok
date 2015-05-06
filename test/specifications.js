@@ -13,7 +13,6 @@ test('\nspecifications in isolation', function (t) {
   t.ok(!spok.range(0, 2)(undefined), 'not range 0, 2, undefined')
   t.ok(!spok.range(0, 2)(null), 'range 0, 2, null')
 
-
   t.ok(spok.ge(0)(1), 'ge 0, 1')
   t.ok(spok.ge(1)(2), 'ge 1, 2')
   t.ok(spok.ge(1)(1), 'ge 1, 1')
@@ -48,6 +47,30 @@ test('\nspecifications in isolation', function (t) {
   t.ok(spok.ne(1)(undefined), 'ne 1, undefined')
   t.ok(spok.ne(undefined)(1), 'ne undefined, 1')
   t.ok(!spok.ne(undefined)(undefined), 'not ne undefined, undefined')
+
+  t.ok(spok.gez(1), 'gez 1')
+  t.ok(spok.gez(0), 'gez 0')
+  t.ok(!spok.gez(-1), 'not gez -1')
+  t.ok(!spok.gez(null), 'not gez null')
+  t.ok(!spok.gez(undefined), 'not gez undefined')
+
+  t.ok(spok.gtz(1), 'gtz 1')
+  t.ok(!spok.gtz(0), 'not gtz 0')
+  t.ok(!spok.gtz(-1), 'not gtz -1')
+  t.ok(!spok.gtz(null), 'not gtz null')
+  t.ok(!spok.gtz(undefined), 'not gtz undefined')
+
+  t.ok(spok.lez(-1), 'lez -1')
+  t.ok(spok.lez(0), 'lez 0')
+  t.ok(!spok.lez(1), 'not lez 1')
+  t.ok(!spok.lez(null), 'not lez null')
+  t.ok(!spok.lez(undefined), 'not lez undefined')
+
+  t.ok(spok.ltz(-1), 'ltz -1')
+  t.ok(!spok.ltz(0), 'not ltz 0')
+  t.ok(!spok.ltz(1), 'not ltz 1')
+  t.ok(!spok.ltz(null), 'not ltz null')
+  t.ok(!spok.ltz(undefined), 'not ltz undefined')
 
   // types
   t.ok(spok.type('object')({}), 'type object, {}')

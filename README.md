@@ -66,17 +66,21 @@ test('my object meets the specifications', function (t) {
 
 - [API](#api)
     - [spok(t, obj, specifications)](#spokt-obj-specifications)
-    - [spok::array(x) → {Boolean}](#spokarrayx-→-boolean)
-    - [spok::definedObject() → {Boolean}](#spokdefinedobject-→-boolean)
+    - [spok::array()](#spokarray)
+    - [spok::definedObject()](#spokdefinedobject)
     - [spok::ge(n)](#spokgen)
+    - [spok::gez()](#spokgez)
     - [spok::gt(n)](#spokgtn)
+    - [spok::gtz()](#spokgtz)
     - [spok::le(n)](#spoklen)
+    - [spok::lez()](#spoklez)
     - [spok::lt(n)](#spokltn)
+    - [spok::ltz()](#spokltz)
     - [spok::ne(value)](#spoknevalue)
-    - [spok::number(x) → {Boolean}](#spoknumberx-→-boolean)
-    - [spok::range(min, max) → {function}](#spokrangemin-max-→-function)
+    - [spok::number()](#spoknumber)
+    - [spok::range(min, max)](#spokrangemin-max)
     - [spok::startsWith(what)](#spokstartswithwhat)
-    - [spok::string() → {Boolean}](#spokstring-→-boolean)
+    - [spok::string()](#spokstring)
     - [spok::type(t)](#spoktypet)
 - [License](#license)
 
@@ -160,7 +164,7 @@ each provided specification is validated and a test failure caused if one of the
 </dl>
 </dd>
 <dt>
-<h4 class="name" id="spok::array"><span class="type-signature"></span>spok::array<span class="signature">(x)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+<h4 class="name" id="spok::array"><span class="type-signature"></span>spok::array<span class="signature">()</span><span class="type-signature"></span></h4>
 </dt>
 <dd>
 <div class="description">
@@ -169,50 +173,19 @@ each provided specification is validated and a test failure caused if one of the
 x: spok.array  // specifies that x should be an Array
 }</code></pre>
 </div>
-<h5>Parameters:</h5>
-<table class="params">
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th class="last">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="name"><code>x</code></td>
-<td class="type">
-<span class="param-type">Any</span>
-</td>
-<td class="description last"><p>value checked by spok to be an array when the tests run</p></td>
-</tr>
-</tbody>
-</table>
 <dl class="details">
 <dt class="tag-source">Source:</dt>
 <dd class="tag-source"><ul class="dummy">
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L204">lineno 204</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L254">lineno 254</a>
 </li>
 </ul></dd>
 </dl>
-<h5>Returns:</h5>
-<div class="param-desc">
-<p><code>true</code> if spec is validated otherwise <code>false</code></p>
-</div>
-<dl>
-<dt>
-Type
-</dt>
-<dd>
-<span class="param-type">Boolean</span>
-</dd>
-</dl>
 </dd>
 <dt>
-<h4 class="name" id="spok::definedObject"><span class="type-signature"></span>spok::definedObject<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+<h4 class="name" id="spok::definedObject"><span class="type-signature"></span>spok::definedObject<span class="signature">()</span><span class="type-signature"></span></h4>
 </dt>
 <dd>
 <div class="description">
@@ -227,21 +200,9 @@ x: spok.definedObject  // specifies that x is a non-null object
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L255">lineno 255</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L300">lineno 300</a>
 </li>
 </ul></dd>
-</dl>
-<h5>Returns:</h5>
-<div class="param-desc">
-<p><code>true</code> if spec is validated otherwise <code>false</code></p>
-</div>
-<dl>
-<dt>
-Type
-</dt>
-<dd>
-<span class="param-type">Boolean</span>
-</dd>
 </dl>
 </dd>
 <dt>
@@ -279,7 +240,28 @@ x: spok.ge(1)  // specifies that x should be &gt;=1
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L107">lineno 107</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L106">lineno 106</a>
+</li>
+</ul></dd>
+</dl>
+</dd>
+<dt>
+<h4 class="name" id="spok::gez"><span class="type-signature"></span>spok::gez<span class="signature">()</span><span class="type-signature"></span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>Specifies that the value is greater or equal zero</p>
+<pre><code class="lang-js">var spec = {
+x: spok.gez
+}</code></pre>
+</div>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
+<span>, </span>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L196">lineno 196</a>
 </li>
 </ul></dd>
 </dl>
@@ -319,7 +301,28 @@ x: spok.gt(1)  // specifies that x should be &gt;1
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L88">lineno 88</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L87">lineno 87</a>
+</li>
+</ul></dd>
+</dl>
+</dd>
+<dt>
+<h4 class="name" id="spok::gtz"><span class="type-signature"></span>spok::gtz<span class="signature">()</span><span class="type-signature"></span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>Specifies that the value is greater than zero</p>
+<pre><code class="lang-js">var spec = {
+x: spok.gtz
+}</code></pre>
+</div>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
+<span>, </span>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L183">lineno 183</a>
 </li>
 </ul></dd>
 </dl>
@@ -359,7 +362,28 @@ x: spok.le(1)  // specifies that x should be &lt;=1
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L146">lineno 146</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L145">lineno 145</a>
+</li>
+</ul></dd>
+</dl>
+</dd>
+<dt>
+<h4 class="name" id="spok::lez"><span class="type-signature"></span>spok::lez<span class="signature">()</span><span class="type-signature"></span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>Specifies that the value is less or equal zero</p>
+<pre><code class="lang-js">var spec = {
+x: spok.lez
+}</code></pre>
+</div>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
+<span>, </span>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L222">lineno 222</a>
 </li>
 </ul></dd>
 </dl>
@@ -371,7 +395,7 @@ x: spok.le(1)  // specifies that x should be &lt;=1
 <div class="description">
 <p>Specififies that a number is less than the given criteria.</p>
 <pre><code class="lang-js">var spec = {
-x: spok.range(1)  // specifies that x should be &lt; 1
+x: spok.lt(1)  // specifies that x should be &lt; 1
 }</code></pre>
 </div>
 <h5>Parameters:</h5>
@@ -399,7 +423,28 @@ x: spok.range(1)  // specifies that x should be &lt; 1
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L127">lineno 127</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L126">lineno 126</a>
+</li>
+</ul></dd>
+</dl>
+</dd>
+<dt>
+<h4 class="name" id="spok::ltz"><span class="type-signature"></span>spok::ltz<span class="signature">()</span><span class="type-signature"></span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>Specifies that the value is less than zero</p>
+<pre><code class="lang-js">var spec = {
+x: spok.ltz
+}</code></pre>
+</div>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
+<span>, </span>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L209">lineno 209</a>
 </li>
 </ul></dd>
 </dl>
@@ -411,7 +456,7 @@ x: spok.range(1)  // specifies that x should be &lt; 1
 <div class="description">
 <p>Specifies that the value is not equal another.</p>
 <pre><code class="lang-js">var spec = {
-x: spok.not(undefined)  // specifies that x should be defined
+x: spok.ne(undefined)  // specifies that x should be defined
 }</code></pre>
 </div>
 <h5>Parameters:</h5>
@@ -439,13 +484,13 @@ x: spok.not(undefined)  // specifies that x should be defined
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L165">lineno 165</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L164">lineno 164</a>
 </li>
 </ul></dd>
 </dl>
 </dd>
 <dt>
-<h4 class="name" id="spok::number"><span class="type-signature"></span>spok::number<span class="signature">(x)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+<h4 class="name" id="spok::number"><span class="type-signature"></span>spok::number<span class="signature">()</span><span class="type-signature"></span></h4>
 </dt>
 <dd>
 <div class="description">
@@ -454,50 +499,19 @@ x: spok.not(undefined)  // specifies that x should be defined
 x: spok.number  // specifies that x should be a Number
 }</code></pre>
 </div>
-<h5>Parameters:</h5>
-<table class="params">
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th class="last">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="name"><code>x</code></td>
-<td class="type">
-<span class="param-type">Any</span>
-</td>
-<td class="description last"><p>value checked by spok to be a number the tests run</p></td>
-</tr>
-</tbody>
-</table>
 <dl class="details">
 <dt class="tag-source">Source:</dt>
 <dd class="tag-source"><ul class="dummy">
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L222">lineno 222</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L270">lineno 270</a>
 </li>
 </ul></dd>
 </dl>
-<h5>Returns:</h5>
-<div class="param-desc">
-<p><code>true</code> if spec is validated otherwise <code>false</code></p>
-</div>
-<dl>
-<dt>
-Type
-</dt>
-<dd>
-<span class="param-type">Boolean</span>
-</dd>
-</dl>
 </dd>
 <dt>
-<h4 class="name" id="spok::range"><span class="type-signature"></span>spok::range<span class="signature">(min, max)</span><span class="type-signature"> &rarr; {function}</span></h4>
+<h4 class="name" id="spok::range"><span class="type-signature"></span>spok::range<span class="signature">(min, max)</span><span class="type-signature"></span></h4>
 </dt>
 <dd>
 <div class="description">
@@ -542,26 +556,14 @@ x: spok.range(1, 2)   // specifies that x should be &gt;=1 and &lt;=2
 </li>
 </ul></dd>
 </dl>
-<h5>Returns:</h5>
-<div class="param-desc">
-<p>function used by spok to check this condition</p>
-</div>
-<dl>
-<dt>
-Type
-</dt>
-<dd>
-<span class="param-type">function</span>
-</dd>
-</dl>
 </dd>
 <dt>
 <h4 class="name" id="spok::startsWith"><span class="type-signature"></span>spok::startsWith<span class="signature">(what)</span><span class="type-signature"></span></h4>
 </dt>
 <dd>
 <div class="description">
-<p>Specifies that the string starts with the specified substring.
-<strong>NOTE</strong>: only available with io.js which has an ES6 <code>startsWith</code> function</p>
+<p>Specifies that the string starts with the specified substring.</p>
+<p><strong>NOTE</strong>: only available with io.js which has an ES6 <code>startsWith</code> function</p>
 <pre><code class="lang-js">var spec = {
 x: spok.startsWith('hello')  // specifies that x should start with 'hello'
 }</code></pre>
@@ -591,13 +593,13 @@ x: spok.startsWith('hello')  // specifies that x should start with 'hello'
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L272">lineno 272</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L316">lineno 316</a>
 </li>
 </ul></dd>
 </dl>
 </dd>
 <dt>
-<h4 class="name" id="spok::string"><span class="type-signature"></span>spok::string<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+<h4 class="name" id="spok::string"><span class="type-signature"></span>spok::string<span class="signature">()</span><span class="type-signature"></span></h4>
 </dt>
 <dd>
 <div class="description">
@@ -612,21 +614,9 @@ x: spok.string  // specifies that x should be a String
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L240">lineno 240</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L286">lineno 286</a>
 </li>
 </ul></dd>
-</dl>
-<h5>Returns:</h5>
-<div class="param-desc">
-<p><code>true</code> if spec is validated otherwise <code>false</code></p>
-</div>
-<dl>
-<dt>
-Type
-</dt>
-<dd>
-<span class="param-type">Boolean</span>
-</dd>
 </dl>
 </dd>
 <dt>
@@ -664,7 +654,7 @@ x: spok.type('number')  // specifies that x should be a Number
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L184">lineno 184</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L235">lineno 235</a>
 </li>
 </ul></dd>
 </dl>
