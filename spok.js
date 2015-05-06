@@ -53,10 +53,8 @@ module.exports = function spok(t, obj, specifications) {
   // check all specs
   Object.keys(specifications).forEach(check);
 
-  // print confirmation that spec is done
-  t.equal(1, 1, 'spokie dokie')
+  // provide confirmation that spec is done
   if (spok.sound) require('child_process').execSync('say spokie dokie -v Vicki -r 600')
-
 }
 
 var spok = module.exports;

@@ -71,8 +71,7 @@ test('\nmultiple specifications all valid', function (t) {
       { actual: true,
         expected: true,
         msg: '··· anArray = [ 1, 2 ]' },
-      { actual: true, expected: true, msg: '··· anObject = {}' },
-      { actual: 1, expected: 1, msg: 'spokie dokie' } ]
+      { actual: true, expected: true, msg: '··· anObject = {}' } ]
     , 'spok performs the expected equality checks'
   )
 
@@ -126,8 +125,7 @@ test('\nmultiple specifications some  invalid', function (t) {
         msg: '··· four = 4' },
       { actual: true,
         expected: true,
-        msg: '··· anArray = [ 1, 2 ]' },
-      { actual: 1, expected: 1, msg: 'spokie dokie' } ]
+        msg: '··· anArray = [ 1, 2 ]' } ]
     , 'spok performs the expected equality checks'
   )
 
