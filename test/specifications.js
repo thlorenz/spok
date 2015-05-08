@@ -74,7 +74,7 @@ test('\nspecifications in isolation', function (t) {
 
   // types
   t.ok(spok.type('object')({}), 'type object, {}')
-  t.ok(!spok.type('object')(1), 'not type object, {}')
+  t.ok(!spok.type('object')(1), 'not type object, 1')
   t.ok(spok.type('object')(null), 'type object, null')
   t.ok(!spok.type('object')(undefined), 'not type object, undefined')
 
@@ -86,7 +86,6 @@ test('\nspecifications in isolation', function (t) {
   t.ok(!spok.number(undefined), 'not number undefined')
 
   t.ok(spok.string('hi'), 'string \'hi\'')
-
   t.ok(!spok.string(1), 'not string 1')
   t.ok(!spok.string({}), 'not string {}')
   t.ok(!spok.string([]), 'not string []')
@@ -97,11 +96,15 @@ test('\nspecifications in isolation', function (t) {
   t.ok(!spok.array({}), 'not array {}')
   t.ok(!spok.array(undefined), 'not array undefined')
 
+  t.ok(spok.type('function')(function () {}), 'type function, function () {}')
+  t.ok(!spok.type('function')(1), 'not type function, 1')
+  t.ok(!spok.type('function')(null), 'not type function, null')
+  t.ok(!spok.type('function')(undefined), 'not type function, undefined')
+
   t.ok(spok.definedObject({}), 'definedObject {}')
   t.ok(!spok.definedObject(1), 'not definedObject 1')
   t.ok(!spok.definedObject(null), 'not definedObject null')
   t.ok(!spok.definedObject(undefined), 'not definedObject undefined')
-
 
   // strings
   if (typeof ''.startsWith === 'function') {

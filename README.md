@@ -68,6 +68,7 @@ test('my object meets the specifications', function (t) {
     - [spok(t, obj, specifications)](#spokt-obj-specifications)
     - [spok::array()](#spokarray)
     - [spok::definedObject()](#spokdefinedobject)
+    - [spok::function()](#spokfunction)
     - [spok::ge(n)](#spokgen)
     - [spok::gez()](#spokgez)
     - [spok::gt(n)](#spokgtn)
@@ -179,7 +180,7 @@ x: spok.array  // specifies that x should be an Array
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L254">lineno 254</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L252">lineno 252</a>
 </li>
 </ul></dd>
 </dl>
@@ -200,7 +201,28 @@ x: spok.definedObject  // specifies that x is a non-null object
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L300">lineno 300</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L312">lineno 312</a>
+</li>
+</ul></dd>
+</dl>
+</dd>
+<dt>
+<h4 class="name" id="spok::function"><span class="type-signature"></span>spok::function<span class="signature">()</span><span class="type-signature"></span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>Specifies that the input is a function.</p>
+<pre><code>var spec = {
+x: spok.function  // specifies that x should be a function
+}</code></pre>
+</div>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
+<span>, </span>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L298">lineno 298</a>
 </li>
 </ul></dd>
 </dl>
@@ -240,7 +262,7 @@ x: spok.ge(1)  // specifies that x should be &gt;=1
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L106">lineno 106</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L104">lineno 104</a>
 </li>
 </ul></dd>
 </dl>
@@ -261,7 +283,7 @@ x: spok.gez
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L196">lineno 196</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L194">lineno 194</a>
 </li>
 </ul></dd>
 </dl>
@@ -301,7 +323,7 @@ x: spok.gt(1)  // specifies that x should be &gt;1
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L87">lineno 87</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L85">lineno 85</a>
 </li>
 </ul></dd>
 </dl>
@@ -322,7 +344,7 @@ x: spok.gtz
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L183">lineno 183</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L181">lineno 181</a>
 </li>
 </ul></dd>
 </dl>
@@ -362,7 +384,7 @@ x: spok.le(1)  // specifies that x should be &lt;=1
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L145">lineno 145</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L143">lineno 143</a>
 </li>
 </ul></dd>
 </dl>
@@ -383,7 +405,7 @@ x: spok.lez
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L222">lineno 222</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L220">lineno 220</a>
 </li>
 </ul></dd>
 </dl>
@@ -423,7 +445,7 @@ x: spok.lt(1)  // specifies that x should be &lt; 1
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L126">lineno 126</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L124">lineno 124</a>
 </li>
 </ul></dd>
 </dl>
@@ -444,7 +466,7 @@ x: spok.ltz
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L209">lineno 209</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L207">lineno 207</a>
 </li>
 </ul></dd>
 </dl>
@@ -484,7 +506,7 @@ x: spok.ne(undefined)  // specifies that x should be defined
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L164">lineno 164</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L162">lineno 162</a>
 </li>
 </ul></dd>
 </dl>
@@ -505,7 +527,7 @@ x: spok.number  // specifies that x should be a Number
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L270">lineno 270</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L268">lineno 268</a>
 </li>
 </ul></dd>
 </dl>
@@ -552,7 +574,7 @@ x: spok.range(1, 2)   // specifies that x should be &gt;=1 and &lt;=2
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L67">lineno 67</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L65">lineno 65</a>
 </li>
 </ul></dd>
 </dl>
@@ -593,7 +615,7 @@ x: spok.startsWith('hello')  // specifies that x should start with 'hello'
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L316">lineno 316</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L328">lineno 328</a>
 </li>
 </ul></dd>
 </dl>
@@ -614,7 +636,7 @@ x: spok.string  // specifies that x should be a String
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L286">lineno 286</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L284">lineno 284</a>
 </li>
 </ul></dd>
 </dl>
@@ -654,7 +676,7 @@ x: spok.type('number')  // specifies that x should be a Number
 <li>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L235">lineno 235</a>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L233">lineno 233</a>
 </li>
 </ul></dd>
 </dl>

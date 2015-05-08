@@ -296,6 +296,20 @@ spok.number = function number(x) {
 spok.string = spok.type('string')
 
 /**
+ * Specifies that the input is a function.
+ *
+ * ```
+ * var spec = {
+ *   x: spok.function  // specifies that x should be a function
+ * }
+ * ```
+ *
+ * @name spok::function
+ * @function
+ */
+spok.function = spok.type('function')
+
+/**
  * Specifies that the input is an object and it is not `null`.
  *
  * ```js
