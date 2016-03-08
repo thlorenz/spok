@@ -82,6 +82,7 @@ test('my object meets the specifications', function (t) {
     - [spok::range(min, max)](#spokrangemin-max)
     - [spok::startsWith(what)](#spokstartswithwhat)
     - [spok::string()](#spokstring)
+    - [spok::test(regex)](#spoktestregex)
     - [spok::type(t)](#spoktypet)
 - [License](#license)
 
@@ -637,6 +638,46 @@ x: spok.string  // specifies that x should be a String
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
 <span>, </span>
 <a href="https://github.com/thlorenz/spok/blob/master/spok.js#L284">lineno 284</a>
+</li>
+</ul></dd>
+</dl>
+</dd>
+<dt>
+<h4 class="name" id="spok::test"><span class="type-signature"></span>spok::test<span class="signature">(regex)</span><span class="type-signature"></span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>Specifies that the string needs to match the given regular expression.</p>
+<pre><code class="lang-js">var spec = {
+x: spok.test(/hello$/) // specifies that x should match /hello$/
+}</code></pre>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>regex</code></td>
+<td class="type">
+<span class="param-type">RegExp</span>
+</td>
+<td class="description last"><p>regular expression against which the string is checked via <code>test</code></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js">spok.js</a>
+<span>, </span>
+<a href="https://github.com/thlorenz/spok/blob/master/spok.js#L351">lineno 351</a>
 </li>
 </ul></dd>
 </dl>

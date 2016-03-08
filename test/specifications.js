@@ -114,5 +114,8 @@ test('\nspecifications in isolation', function (t) {
   t.ok(!spok.startsWith('hello')(undefined), 'startsWith hello, undefined')
   }
 
+  t.ok(spok.test(/hello$/)('world hello'), 'test /hello$/, "world hello"')  
+  t.ok(!spok.test(/hello$/)('hello world'), 'test /hello$/, "hello world"')  
+  t.ok(!spok.test(/hello$/)('world hello '), 'test /hello$/, "world hello "')  
   t.end()
 })

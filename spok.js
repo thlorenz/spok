@@ -343,7 +343,28 @@ spok.definedObject = function definedObject(x) {
 spok.startsWith = function startsWith(what) {
   return function checkStartsWith(x) {
     var res = x && typeof x.startsWith === 'function' && x.startsWith(what)
-    if (!res) console.error('%s !==\n%s', x, what)
+    if (!res) console.error('"%s" does not start with "%s"', x, what)
+    return res
+  }
+}
+
+/**
+ * Specifies that the string needs to match the given regular expression.
+ * 
+ * ```js
+ * var spec = {
+ *   x: spok.test(/hello$/) // specifies that x should match /hello$/ 
+ * }
+ * ```
+ *
+ * @name spok::test
+ * @function
+ * @param {RegExp} regex regular expression against which the string is checked via `test`
+ */
+spok.test = function test(regex) {
+  return function checkTest(x) {
+    var res = regex.test(x)
+    if (!res) console.error('"%s" does not match \n%s', x, regex.toString())
     return res
   }
 }
