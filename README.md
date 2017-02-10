@@ -88,8 +88,6 @@ test('my object meets the specifications', function (t) {
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## API
-
 spok provides a few common specification functions. However you can write your own functions as well, just return `true`
 if specification was satisfied and `false` if not (see example above).
 
@@ -97,6 +95,8 @@ If you write a specification function that would be useful to others please add 
 
 `spok.*` comparison function names are derived from [**bash** comparison
 operators](http://www.tldp.org/LDP/abs/html/comparison-ops.html) to make them easier to remember.
+
+## [API](https://thlorenz.github.io/spok)
 
 
 <!-- START docme generated API please keep comment here to allow auto update -->

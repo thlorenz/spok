@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 var insp = require('./inspect')
 
 /**
@@ -18,21 +18,15 @@ module.exports = function spok(t, obj, specifications) {
   var prefix = ''
 
   function check(k) {
-    var specString;
-    if (k === '$topic') return;
+    if (k === '$topic') return
 
     var spec = specifications[k]
     var val = obj[k]
 
-    if (typeof spec === 'object') // includes array
-      specString = insp(spec, spok.color);
-    else
-      specString = spec;
-
-    var msg = prefix + k + ' = ' + insp(val, spok.color);
+    var msg = prefix + k + ' = ' + insp(val, spok.color)
 
     switch (typeof spec) {
-      case 'function': return t.equal(!!spec(val), true, msg);
+      case 'function': return t.equal(!!spec(val), true, msg)
       case 'boolean':
       case 'number':
       case 'string':
@@ -45,22 +39,22 @@ module.exports = function spok(t, obj, specifications) {
   }
 
   if (specifications.$topic) {
-    prefix = '··· ';
+    prefix = '··· '
     // print indicator that a specific spec started being evaluated
     t.equal(1, 1, 'spok: ' + specifications.$topic)
   }
 
   // check all specs
-  Object.keys(specifications).forEach(check);
+  Object.keys(specifications).forEach(check)
 
   // provide confirmation that spec is done
   if (spok.sound) require('child_process').execSync('say spokie dokie -v Vicki -r 600')
 }
 
-var spok = module.exports;
+var spok = module.exports
 
-spok.sound = false;
-spok.color = true;
+spok.sound = false
+spok.color = true
 
 /**
  * Specififies that the given number is within the given range, i.e. `min<= x <=max`.
@@ -71,14 +65,14 @@ spok.color = true;
  * }
  * ```
  *
- * @name spok::range
+ * @name spok.range
  * @function
  * @param {Number} min minimum
  * @param {Number} max maximum
  */
 spok.range = function range(min, max) {
   return function checkRange(x) {
-    return spok.number(x) && min <= x && x <= max;
+    return spok.number(x) && min <= x && x <= max
   }
 }
 
@@ -91,13 +85,13 @@ spok.range = function range(min, max) {
  * }
  * ```
  *
- * @name spok::gt
+ * @name spok.gt
  * @function
  * @param {Number} n criteria
  */
 spok.gt = function gt(n) {
   return function checkgt(x) {
-    return spok.number(x) && x > n;
+    return spok.number(x) && x > n
   }
 }
 
@@ -110,16 +104,15 @@ spok.gt = function gt(n) {
  * }
  * ```
  *
- * @name spok::ge
+ * @name spok.ge
  * @function
  * @param {Number} n criteria
  */
 spok.ge = function ge(n) {
   return function checkge(x) {
-    return spok.number(x) && x >= n;
+    return spok.number(x) && x >= n
   }
 }
-
 
 /**
  * Specififies that a number is less than the given criteria.
@@ -130,13 +123,13 @@ spok.ge = function ge(n) {
  * }
  * ```
  *
- * @name spok::lt
+ * @name spok.lt
  * @function
  * @param {Number} n criteria
  */
 spok.lt = function lt(n) {
   return function checklt(x) {
-    return spok.number(x) && x < n;
+    return spok.number(x) && x < n
   }
 }
 
@@ -149,13 +142,13 @@ spok.lt = function lt(n) {
  * }
  * ```
  *
- * @name spok::le
+ * @name spok.le
  * @function
  * @param {Number} n criteria
  */
 spok.le = function le(n) {
   return function checkle(x) {
-    return spok.number(x) && x <= n;
+    return spok.number(x) && x <= n
   }
 }
 
@@ -168,7 +161,7 @@ spok.le = function le(n) {
  * }
  * ```
  *
- * @name spok::ne
+ * @name spok.ne
  * @function
  * @param {Any} value criteria
  */
@@ -186,7 +179,7 @@ spok.ne = function ne(value) {
  *   x: spok.gtz
  * }
  * ```
- * @name spok::gtz
+ * @name spok.gtz
  * @function
  */
 spok.gtz = spok.gt(0)
@@ -199,7 +192,7 @@ spok.gtz = spok.gt(0)
  *   x: spok.gez
  * }
  * ```
- * @name spok::gez
+ * @name spok.gez
  * @function
  */
 spok.gez = spok.ge(0)
@@ -212,7 +205,7 @@ spok.gez = spok.ge(0)
  *   x: spok.ltz
  * }
  * ```
- * @name spok::ltz
+ * @name spok.ltz
  * @function
  */
 spok.ltz = spok.lt(0)
@@ -225,7 +218,7 @@ spok.ltz = spok.lt(0)
  *   x: spok.lez
  * }
  * ```
- * @name spok::lez
+ * @name spok.lez
  * @function
  */
 spok.lez = spok.le(0)
@@ -239,13 +232,13 @@ spok.lez = spok.le(0)
  * }
  * ```
  *
- * @name spok::type
+ * @name spok.type
  * @function
  * @param {String} t expected type
  */
 spok.type = function type(t) {
   return function checkType(x) {
-    return typeof x === t;
+    return typeof x === t
   }
 }
 
@@ -258,11 +251,33 @@ spok.type = function type(t) {
  * }
  * ```
  *
- * @name spok::array
+ * @name spok.array
  * @function
  */
 spok.array = function array(x) {
   return Array.isArray(x)
+}
+
+/**
+ * Specifies that the input is an array with a specific number of elements
+ *
+ * var spec = {
+ *  x: spok.arrayElements(2)  // specifies that x should be an Array witn 2 elements
+ * }
+ *
+ * @name spok.arrayElements
+ * @function
+ * @param {Number} n number of elements
+ */
+spok.arrayElements = function arrayElements(n) {
+  return function checkCount(array) {
+    if (array == null) {
+      return console.error('Expected %d, but found array to be null.', n)
+    }
+    var pass = spok.array(array) && array.length === n
+    if (!pass) console.error('Expected %d, but found %d elements.', n, array.length)
+    return pass
+  }
 }
 
 /**
@@ -274,7 +289,7 @@ spok.array = function array(x) {
  * }
  * ```
  *
- * @name spok::number
+ * @name spok.number
  * @function
  */
 spok.number = function number(x) {
@@ -290,7 +305,7 @@ spok.number = function number(x) {
  * }
  * ```
  *
- * @name spok::string
+ * @name spok.string
  * @function
  */
 spok.string = spok.type('string')
@@ -304,7 +319,7 @@ spok.string = spok.type('string')
  * }
  * ```
  *
- * @name spok::function
+ * @name spok.function
  * @function
  */
 spok.function = spok.type('function')
@@ -318,7 +333,7 @@ spok.function = spok.type('function')
  * }
  * ```
  *
- * @name spok::definedObject
+ * @name spok.definedObject
  * @function
  */
 spok.definedObject = function definedObject(x) {
@@ -328,7 +343,7 @@ spok.definedObject = function definedObject(x) {
 /**
  * Specifies that the string starts with the specified substring.
  *
- * **NOTE**: only available with io.js which has an ES6 `startsWith` function
+ * **NOTE**: only available with node.js which has an ES6 `startsWith` function
  *
  * ```js
  * var spec = {
@@ -336,7 +351,7 @@ spok.definedObject = function definedObject(x) {
  * }
  * ```
  *
- * @name spok::startsWith
+ * @name spok.startsWith
  * @function
  * @param {String} what substring the given string should start with
  */
@@ -349,15 +364,38 @@ spok.startsWith = function startsWith(what) {
 }
 
 /**
- * Specifies that the string needs to match the given regular expression.
- * 
+ * Specifies that the string ends with the specified substring.
+ *
+ * **NOTE**: only available with node.js which has an ES6 `endsWith` function
+ *
  * ```js
  * var spec = {
- *   x: spok.test(/hello$/) // specifies that x should match /hello$/ 
+ *  x: spok.endsWith('hello')  // specifies that x should start with 'hello'
  * }
  * ```
  *
- * @name spok::test
+ * @name spok.endsWith
+ * @function
+ * @param {String} what substring the given string should start with
+ */
+spok.endsWith = function endsWith(what) {
+  return function checkendsWith(x) {
+    var res = x && typeof x.endsWith === 'function' && x.endsWith(what)
+    if (!res) console.error('"%s" does not start with "%s"', x, what)
+    return res
+  }
+}
+
+/**
+ * Specifies that the string needs to match the given regular expression.
+ *
+ * ```js
+ * var spec = {
+ *   x: spok.test(/hello$/) // specifies that x should match /hello$/
+ * }
+ * ```
+ *
+ * @name spok.test
  * @function
  * @param {RegExp} regex regular expression against which the string is checked via `test`
  */
@@ -367,4 +405,36 @@ spok.test = function test(regex) {
     if (!res) console.error('"%s" does not match \n%s', x, regex.toString())
     return res
   }
+}
+
+/**
+ * Specifies that a value is defined, i.e. it is neither `null` nor `undefined`.
+ *
+ * ```js
+ * var spec = {
+ *   x: spok.defined
+ * }
+ * ```
+ *
+ * @name spok.defined
+ * @function
+ */
+spok.defined = function defined(x) {
+  return x != null
+}
+
+/**
+ * Specifies that a value is notDefined, i.e. it is either `null` or `notDefined`.
+ *
+ * ```js
+ * var spec = {
+ *   x: spok.notDefined
+ * }
+ * ```
+ *
+ * @name spok.notDefined
+ * @function
+ */
+spok.notDefined = function notDefined(x) {
+  return x == null
 }

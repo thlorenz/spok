@@ -1,9 +1,7 @@
-'use strict';
-
 var test = require('tape')
 var spok = require('../')
 
-test('\nspecifications in isolation', function (t) {
+test('\nspecifications in isolation', function(t) {
   // ranges and comparisons
   t.ok(spok.range(0, 2)(1), 'range 0, 2, 1')
   t.ok(spok.range(0, 2)(0), 'range 0, 2, 0')
@@ -96,7 +94,13 @@ test('\nspecifications in isolation', function (t) {
   t.ok(!spok.array({}), 'not array {}')
   t.ok(!spok.array(undefined), 'not array undefined')
 
-  t.ok(spok.type('function')(function () {}), 'type function, function () {}')
+  t.ok(spok.arrayElements(0)([]), 'arrayElements [] is 0')
+  t.ok(!spok.arrayElements(0)({}), 'not array {}')
+  t.ok(spok.arrayElements(1)([ 1 ]), 'arrayElements [ 1 ] is 1')
+  t.ok(spok.arrayElements(2)([ 1, 2 ]), 'arrayElements [ 1, 2 ] is 2')
+  t.ok(!spok.arrayElements(3)([ 1, 2 ]), 'arrayElements [ 1, 2 ] is not 3')
+
+  t.ok(spok.type('function')(function() {}), 'type function, function () {}')
   t.ok(!spok.type('function')(1), 'not type function, 1')
   t.ok(!spok.type('function')(null), 'not type function, null')
   t.ok(!spok.type('function')(undefined), 'not type function, undefined')
@@ -113,9 +117,23 @@ test('\nspecifications in isolation', function (t) {
   t.ok(!spok.startsWith('hello')(null), 'startsWith hello, null')
   t.ok(!spok.startsWith('hello')(undefined), 'startsWith hello, undefined')
   }
+  if (typeof ''.endsWith === 'function') {
+  t.ok(spok.endsWith('world')('hello world'), 'endsWith world, helloWorld')
+  t.ok(spok.endsWith('welt')('hello welt'), 'endsWith welt, helloWelt')
+  t.ok(!spok.endsWith('hello')(null), 'not endsWith hello, null')
+  t.ok(!spok.endsWith('hello')(undefined), 'not endsWith hello, undefined')
+  }
 
-  t.ok(spok.test(/hello$/)('world hello'), 'test /hello$/, "world hello"')  
-  t.ok(!spok.test(/hello$/)('hello world'), 'test /hello$/, "hello world"')  
-  t.ok(!spok.test(/hello$/)('world hello '), 'test /hello$/, "world hello "')  
+  t.ok(spok.test(/hello$/)('world hello'), 'test /hello$/, "world hello"')
+  t.ok(!spok.test(/hello$/)('hello world'), 'test /hello$/, "hello world"')
+  t.ok(!spok.test(/hello$/)('world hello '), 'test /hello$/, "world hello "')
+
+  t.ok(spok.defined(1), '1 is defined')
+  t.ok(!spok.defined(null), 'null is not defined')
+  t.ok(!spok.defined(undefined), 'undefined is not defined')
+
+  t.ok(!spok.notDefined(1), '1 is not notDefined')
+  t.ok(spok.notDefined(null), 'null is notDefined')
+  t.ok(spok.notDefined(undefined), 'undefined is notDefined')
   t.end()
 })
