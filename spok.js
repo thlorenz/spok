@@ -1,6 +1,17 @@
 'use strict'
 var insp = require('./inspect')
 
+function needRecurse(spec) {
+  if (Array.isArray(spec)) return false
+  var keys = Object.keys(spec)
+  if (keys.length === 0) return false
+
+  // if no spok functions are part of the spec, we could use deepEqual, but
+  // we get a more fine grained output if we recurse even if the spec values
+  // are constants
+  return true
+}
+
 /**
  * Checks the given specifications against the object.
  *
@@ -14,8 +25,8 @@ var insp = require('./inspect')
  * @param {Object} obj the object to verify the specifications against
  * @param {Object} specifications the specifications to verify
  */
-module.exports = function spok(t, obj, specifications) {
-  var prefix = ''
+module.exports = function spok(t, obj, specifications, prefix) {
+  prefix = typeof prefix === 'string' ? prefix : ''
 
   function check(k) {
     if (k === '$topic') return
@@ -31,17 +42,24 @@ module.exports = function spok(t, obj, specifications) {
       case 'number':
       case 'string':
         return t.equal(val, spec, msg)
-      case 'object': // includes Array
-        return t.deepEqual(val, spec, msg)
+      case 'object':
+        if (spec == null) return t.equal(val, spec, msg)
+        if (!needRecurse(spec)) return t.deepEqual(val, spec, msg)
+
+        if (spec.$topic == null) {
+          var rootTopic = specifications.$topic != null ? specifications.$topic + '.' : ''
+          spec.$topic = rootTopic + k
+        }
+        return spok(t, val, spec, prefix)
       default:
         throw new Error('Type ' + typeof spec + ' not yet handled. Please submit a PR')
     }
   }
 
   if (specifications.$topic) {
-    prefix = '··· '
     // print indicator that a specific spec started being evaluated
-    t.equal(1, 1, 'spok: ' + specifications.$topic)
+    t.equal(1, 1, prefix + 'spok: ' + specifications.$topic)
+    prefix = prefix + '·· '
   }
 
   // check all specs
