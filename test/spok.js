@@ -3,6 +3,10 @@
 var test = require('tape')
 var spok = require('../')
 
+// eslint-disable-next-line no-unused-vars
+function inspect(obj, depth) {
+  console.error(require('util').inspect(obj, false, depth || 5, false))
+}
 var equalCalls
 var deepEqualCalls
 
@@ -247,6 +251,62 @@ test('\nnested specifications all valid', function(t) {
           'close.resource.context.callback' ],
         msg: '·· propertyPaths = [ \'open.resource.context.callback\',\n  \'stat.resource.context.callback\',\n  \'read.resource.context.callback\',\n  \'close.resource.context.callback\' ]' } ]
     , 'spok executes the correct equal calls'
+  )
+  t.end()
+})
+
+test('\nnested specifications in array', function(t) {
+  init()
+  var object = {
+      objArray          : [ { foo: 'bar' }, { bar: 'foo' } ]
+    , numberArray       : [ 1, 2 ]
+    , stringArray       : [ 'h', 'e' ]
+    , numberStringArray : [ 1, 2, 'h', 'e' ]
+  }
+
+  var specs = {
+      $topic: 'spok-test-nested-specs-in-array'
+    , objArray: [ { foo: spok.string }, { bar: 'foo' } ]
+    , numberArray       : [ 1, 2 ]
+    , stringArray       : [ 'h', 'e' ]
+    , numberStringArray : [ spok.gtz, 2, spok.startsWith('h'), 'e' ]
+  }
+
+  spok(assert, object, specs)
+
+  t.deepEqual(equalCalls,
+    [ { actual: 1,
+        expected: 1,
+        msg: 'spok: spok-test-nested-specs-in-array' },
+      { actual: 1,
+        expected: 1,
+        msg: '·· spok: spok-test-nested-specs-in-array.objArray' },
+      { actual: 1,
+        expected: 1,
+        msg: '·· ·· spok: spok-test-nested-specs-in-array.objArray.0' },
+      { actual: true, expected: true, msg: '·· ·· ·· foo = \'bar\'' },
+      { actual: 1,
+        expected: 1,
+        msg: '·· ·· spok: spok-test-nested-specs-in-array.objArray.1' },
+      { actual: 'foo', expected: 'foo', msg: '·· ·· ·· bar = \'foo\'' },
+      { actual: 1,
+        expected: 1,
+        msg: '·· spok: spok-test-nested-specs-in-array.numberStringArray' },
+      { actual: true, expected: true, msg: '·· ·· 0 = 1' },
+      { actual: 2, expected: 2, msg: '·· ·· 1 = 2' },
+      { actual: true, expected: true, msg: '·· ·· 2 = \'h\'' },
+      { actual: 'e', expected: 'e', msg: '·· ·· 3 = \'e\'' } ]
+    , 'spok executes correct equal calls'
+  )
+
+  t.deepEqual(deepEqualCalls,
+    [ { actual: [ 1, 2 ],
+        expected: [ 1, 2 ],
+        msg: '·· numberArray = [ 1, 2 ]' },
+      { actual: [ 'h', 'e' ],
+        expected: [ 'h', 'e' ],
+        msg: '·· stringArray = [ \'h\', \'e\' ]' } ]
+    , 'spok executes correct deep equal calls'
   )
   t.end()
 })

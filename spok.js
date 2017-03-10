@@ -1,8 +1,17 @@
 'use strict'
 var insp = require('./inspect')
 
+// only recurse into arrays if they contain actual specs or objects
+function needRecurseArray(arr) {
+  for (var i = 0; i < arr.length; i++) {
+    var el = arr[i]
+    if (typeof el !== 'number' && typeof el !== 'string' && el != null) return true
+  }
+  return false
+}
+
 function needRecurse(spec) {
-  if (Array.isArray(spec)) return false
+  if (Array.isArray(spec)) return needRecurseArray(spec)
   var keys = Object.keys(spec)
   if (keys.length === 0) return false
 
