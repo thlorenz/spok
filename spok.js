@@ -39,7 +39,7 @@ module.exports = function spok(t, obj, specifications, prefix) {
   prefix = typeof prefix === 'string' ? prefix : ''
 
   function check(k) {
-    if (k === '$topic') return
+    if (k === '$topic' || k === '$spec' || k === '$description') return
 
     var spec = specifications[k]
     var val = obj[k]
