@@ -9,51 +9,37 @@ var test = require('tape')
 var spok = require('spok')
 
 // this would be returned from a function you are testing
-const res =   {
-    $topic: 'user function'
-  , file: '/Volumes/d/dev/js/async-hooks/ah-fs/test/read-one-file.js'
-  , line: 39
-  , column: 17
-  , inferredName: ''
-  , name: 'onread'
-  , location: 'onread (/Volumes/d/dev/js/async-hooks/ah-fs/test/read-one-file.js:39:17)'
-  , propertyPaths:
-    [ 'open.resource.context.callback'
-    , 'close.resource.context.callback' ]
-  , args:
-    { '0': null
-    , '1':
-      { type: 'Buffer'
-      , len: 6108
-      , included: 18
-      , val:
-          { utf8: 'const test = requi'
-          , hex: '636f6e73742074657374203d207265717569' } }
-    , proto: 'Object' }
+var object = {
+    one          : 1
+  , two          : 2
+  , three        : 3
+  , four         : 4
+  , helloWorld   : 'hello world'
+  , anyNum       : 999
+  , anotherNum   : 888
+  , anArray      : [ 1, 2 ]
+  , anotherArray : [ 1, 2, 3 ]
+  , anObject     : {}
 }
 
-test('\nspok handles nested specifications', function(t) {
-  spok(t, res, {
-      $topic: 'result'
-    , file: spok.test(/read-one-file/)
-    , line: 39
-    , column: 17
-    , inferredName: ''
-    , name: 'onread'
-    , location: spok.startsWith('onread')
-    , propertyPaths:
-      [ 'open.resource.context.callback'
-      , 'close.resource.context.callback' ]
-    , args:
-      { '0': null
-      , '1':
-        { type: 'Buffer'
-        , len: spok.gt(1000)
-        , included: spok.lt(20)
-        , val:
-            { utf8: spok.string
-            , hex: '636f6e73742074657374203d207265717569' } }
-      , proto: 'Object' }
+// custom specification
+function hasThreeElements(a) {
+  return a.length === 3
+}
+
+test('my object meets the specifications', function(t) {
+  spok(t, object, {
+      $topic      : 'spok-example'
+    , one          : spok.ge(1)
+    , two          : 2
+    , three        : spok.range(2, 4)
+    , four         : spok.lt(5)
+    , helloWorld   : spok.startsWith('hello')
+    , anyNum       : spok.type('number')
+    , anotherNum   : spok.number
+    , anArray      : spok.array
+    , anotherArray : hasThreeElements
+    , anObject     : spok.ne(undefined)
   })
   t.end()
 })
@@ -72,6 +58,16 @@ test('\nspok handles nested specifications', function(t) {
 -   values don't exactly match, but are in a given range
 -   you want to provide a predicate to determine if a value is correct or not
 -   you only want to check a subset of values contained in the object
+
+## Adjusting Print Details
+
+By default spok prints the specification that a particular assertion satisified, i.e. `satisfies: spok.range(2, 4)`.
+You can turn that off via `spok.printSpec = false`.
+
+On the other hand if you want more details about the satisified spec do `spok.printDescription = true` instead to get
+spok to print things like `satisfies: spok.range(2, 4) 2 <= value <= 4`.
+
+Specs and descriptions are printed in gray so you can focus on the actual values of the test output.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->

@@ -2,6 +2,7 @@
 
 var test = require('tape')
 var spok = require('../')
+spok.printSpec = false
 
 // eslint-disable-next-line no-unused-vars
 function inspect(obj, depth) {

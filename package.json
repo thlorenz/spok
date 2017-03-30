@@ -19,7 +19,9 @@
     "url": "git://github.com/thlorenz/spok.git"
   },
   "homepage": "https://github.com/thlorenz/spok",
-  "dependencies": {},
+  "dependencies": {
+    "ansicolors": "~0.3.2"
+  },
   "devDependencies": {
     "nave": "~0.5.1",
     "tape": "~4.0.0"

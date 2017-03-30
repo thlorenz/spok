@@ -1,5 +1,6 @@
 'use strict'
 var insp = require('./inspect')
+var colors = require('ansicolors')
 
 // only recurse into arrays if they contain actual specs or objects
 function needRecurseArray(arr) {
@@ -44,6 +45,15 @@ module.exports = function spok(t, obj, specifications, prefix) {
     var val = obj[k]
 
     var msg = prefix + k + ' = ' + insp(val, spok.color)
+    if (spec != null) {
+      if (spec.$spec == null && spec.name != null && spec.name.length > 0) {
+        spec.$spec = spec.name
+      }
+      var ps = !!spok.printSpec && spec.$spec != null
+      var pd = !!spok.printDescription && spec.$description != null
+      if (ps) msg += '  ' + colors.brightBlack('satisfies: ' + spec.$spec)
+      if (pd) msg += '  ' + colors.brightBlack(spec.$description)
+    }
 
     switch (typeof spec) {
       case 'function': return t.equal(!!spec(val), true, msg)
@@ -80,6 +90,8 @@ module.exports = function spok(t, obj, specifications, prefix) {
 
 var spok = module.exports
 
+spok.printSpec = true
+spok.printDescription = false
 spok.sound = false
 spok.color = true
 
@@ -98,9 +110,12 @@ spok.color = true
  * @param {Number} max maximum
  */
 spok.range = function range(min, max) {
-  return function checkRange(x) {
+  function checkRange(x) {
     return spok.number(x) && min <= x && x <= max
   }
+  checkRange.$spec = 'spok.range(' + min + ', ' + max + ')'
+  checkRange.$description = min + ' <= value <= ' + max
+  return checkRange
 }
 
 /**
@@ -117,9 +132,12 @@ spok.range = function range(min, max) {
  * @param {Number} n criteria
  */
 spok.gt = function gt(n) {
-  return function checkgt(x) {
+  function checkgt(x) {
     return spok.number(x) && x > n
   }
+  checkgt.$spec = 'spok.gt(' + n + ')'
+  checkgt.$description = 'value > ' + n
+  return checkgt
 }
 
 /**
@@ -136,9 +154,12 @@ spok.gt = function gt(n) {
  * @param {Number} n criteria
  */
 spok.ge = function ge(n) {
-  return function checkge(x) {
+  function checkge(x) {
     return spok.number(x) && x >= n
   }
+  checkge.$spec = 'spok.ge(' + n + ')'
+  checkge.$description = 'value >= ' + n
+  return checkge
 }
 
 /**
@@ -155,9 +176,12 @@ spok.ge = function ge(n) {
  * @param {Number} n criteria
  */
 spok.lt = function lt(n) {
-  return function checklt(x) {
+  function checklt(x) {
     return spok.number(x) && x < n
   }
+  checklt.$spec = 'spok.lt(' + n + ')'
+  checklt.$description = 'value < ' + n
+  return checklt
 }
 
 /**
@@ -174,9 +198,12 @@ spok.lt = function lt(n) {
  * @param {Number} n criteria
  */
 spok.le = function le(n) {
-  return function checkle(x) {
+  function checkle(x) {
     return spok.number(x) && x <= n
   }
+  checkle.$spec = 'spok.le(' + n + ')'
+  checkle.$description = 'value <= ' + n
+  return checkle
 }
 
 /**
@@ -193,9 +220,12 @@ spok.le = function le(n) {
  * @param {Any} value criteria
  */
 spok.ne = function ne(value) {
-  return function checkne(x) {
+  function checkne(x) {
     return value !== x
   }
+  checkne.$spec = 'spok.ne(' + value + ')'
+  checkne.$description = 'value !== ' + value
+  return checkne
 }
 
 /**
@@ -210,6 +240,8 @@ spok.ne = function ne(value) {
  * @function
  */
 spok.gtz = spok.gt(0)
+spok.gtz.$spec = 'spok.gtz'
+spok.gtz.$description = 'value > 0'
 
 /**
  * Specifies that the value is greater or equal zero
@@ -223,6 +255,8 @@ spok.gtz = spok.gt(0)
  * @function
  */
 spok.gez = spok.ge(0)
+spok.gez.$spec = 'spok.gez'
+spok.gez.$description = 'value >= 0'
 
 /**
  * Specifies that the value is less than zero
@@ -236,6 +270,8 @@ spok.gez = spok.ge(0)
  * @function
  */
 spok.ltz = spok.lt(0)
+spok.ltz.$spec = 'spok.ltz'
+spok.ltz.$description = 'value < 0'
 
 /**
  * Specifies that the value is less or equal zero
@@ -249,6 +285,8 @@ spok.ltz = spok.lt(0)
  * @function
  */
 spok.lez = spok.le(0)
+spok.lez.$spec = 'spok.lez'
+spok.lez.$description = 'value <= 0'
 
 /**
  * Specifies that the input is of a given type.
@@ -264,9 +302,12 @@ spok.lez = spok.le(0)
  * @param {String} t expected type
  */
 spok.type = function type(t) {
-  return function checkType(x) {
+  function checkType(x) {
     return typeof x === t
   }
+  checkType.$spec = 'spok.type(' + t + ')'
+  checkType.$description = 'value is of type ' + t
+  return checkType
 }
 
 /**
@@ -284,6 +325,8 @@ spok.type = function type(t) {
 spok.array = function array(x) {
   return Array.isArray(x)
 }
+spok.array.$spec = 'spok.array'
+spok.array.$description = 'values ia an Array'
 
 /**
  * Specifies that the input is an array with a specific number of elements
@@ -297,7 +340,7 @@ spok.array = function array(x) {
  * @param {Number} n number of elements
  */
 spok.arrayElements = function arrayElements(n) {
-  return function checkCount(array) {
+  function checkCount(array) {
     if (array == null) {
       return console.error('Expected %d, but found array to be null.', n)
     }
@@ -305,6 +348,9 @@ spok.arrayElements = function arrayElements(n) {
     if (!pass) console.error('Expected %d, but found %d elements.', n, array.length)
     return pass
   }
+  checkCount.$spec = 'spok.arrayElements(' + n + ')'
+  checkCount.$description = 'array has ' + n + ' element(s)'
+  return checkCount
 }
 
 /**
@@ -322,6 +368,8 @@ spok.arrayElements = function arrayElements(n) {
 spok.number = function number(x) {
   return typeof x === 'number' && !isNaN(x)
 }
+spok.number.$spec = 'spok.number'
+spok.number.$description = 'value is a number'
 
 /**
  * Specifies that the input is a string.
@@ -336,6 +384,8 @@ spok.number = function number(x) {
  * @function
  */
 spok.string = spok.type('string')
+spok.string.$spec = 'spok.string'
+spok.string.$description = 'value is a string'
 
 /**
  * Specifies that the input is a function.
@@ -350,6 +400,8 @@ spok.string = spok.type('string')
  * @function
  */
 spok.function = spok.type('function')
+spok.function.$spec = 'spok.function'
+spok.function.$description = 'value is a function'
 
 /**
  * Specifies that the input is an object and it is not `null`.
@@ -366,6 +418,8 @@ spok.function = spok.type('function')
 spok.definedObject = function definedObject(x) {
   return x !== null && typeof x === 'object'
 }
+spok.definedObject.$spec = 'spok.definedObject'
+spok.definedObject.$description = 'value is defined and of type object'
 
 /**
  * Specifies that the string starts with the specified substring.
@@ -383,11 +437,14 @@ spok.definedObject = function definedObject(x) {
  * @param {String} what substring the given string should start with
  */
 spok.startsWith = function startsWith(what) {
-  return function checkStartsWith(x) {
+  function checkStartsWith(x) {
     var res = x && typeof x.startsWith === 'function' && x.startsWith(what)
     if (!res) console.error('"%s" does not start with "%s"', x, what)
     return res
   }
+  checkStartsWith.$spec = 'spok.startsWith(' + what + ')'
+  checkStartsWith.$description = 'string starts with ' + what
+  return checkStartsWith
 }
 
 /**
@@ -406,11 +463,14 @@ spok.startsWith = function startsWith(what) {
  * @param {String} what substring the given string should start with
  */
 spok.endsWith = function endsWith(what) {
-  return function checkendsWith(x) {
+  function checkEndsWith(x) {
     var res = x && typeof x.endsWith === 'function' && x.endsWith(what)
     if (!res) console.error('"%s" does not start with "%s"', x, what)
     return res
   }
+  checkEndsWith.$spec = 'spok.endsWith(' + what + ')'
+  checkEndsWith.$description = 'string ends with ' + what
+  return checkEndsWith
 }
 
 /**
@@ -427,11 +487,15 @@ spok.endsWith = function endsWith(what) {
  * @param {RegExp} regex regular expression against which the string is checked via `test`
  */
 spok.test = function test(regex) {
-  return function checkTest(x) {
+  function checkTest(x) {
     var res = regex.test(x)
     if (!res) console.error('"%s" does not match \n%s', x, regex.toString())
     return res
   }
+  var s = regex.toString()
+  checkTest.$spec = 'spok.test(' + s + ')'
+  checkTest.$description = 'value matches ' + s + ' regex'
+  return checkTest
 }
 
 /**
@@ -449,6 +513,8 @@ spok.test = function test(regex) {
 spok.defined = function defined(x) {
   return x != null
 }
+spok.defined.$spec = 'spok.defined'
+spok.defined.$description = 'value is neither null nor undefined'
 
 /**
  * Specifies that a value is notDefined, i.e. it is either `null` or `notDefined`.
@@ -465,3 +531,5 @@ spok.defined = function defined(x) {
 spok.notDefined = function notDefined(x) {
   return x == null
 }
+spok.notDefined.$spec = 'spok.notDefined'
+spok.notDefined.$description = 'value is either null or undefined'
