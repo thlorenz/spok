@@ -42,6 +42,11 @@ module.exports = function spok(t, obj, specifications, prefix) {
     if (k === '$topic' || k === '$spec' || k === '$description') return
 
     var spec = specifications[k]
+
+    if (!obj) {
+      return t.equal(val, spec, prefix + k + ' = ' + insp('undefined', spok.color))
+    }
+
     var val = obj[k]
 
     var msg = prefix + k + ' = ' + insp(val, spok.color)
