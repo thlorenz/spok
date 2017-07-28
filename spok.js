@@ -69,6 +69,15 @@ module.exports = function spok(t, obj, specifications, prefix) {
           var rootTopic = specifications.$topic != null ? specifications.$topic + '.' : ''
           spec.$topic = rootTopic + k
         }
+
+        if (Array.isArray(spec)) {
+          var newSpec = val.map(function (value, key) {
+            return spec[key] || spec[0]
+          })
+          newSpec.$topic = spec.$topic
+          return spok(t, val, newSpec, prefix)
+        }
+
         return spok(t, val, spec, prefix)
       default:
         throw new Error('Type ' + typeof spec + ' not yet handled. Please submit a PR')
