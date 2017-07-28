@@ -42,6 +42,11 @@ module.exports = function spok(t, obj, specifications, prefix) {
     if (k === '$topic' || k === '$spec' || k === '$description') return
 
     var spec = specifications[k]
+
+    if (!obj) {
+      return t.equal('undefined', spec, prefix + k + ' = ' + insp('undefined', spok.color) + ' ' + colors.brightBlack('satisfies: ' + spec.$spec))
+    }
+
     var val = obj[k]
 
     var msg = prefix + k + ' = ' + insp(val, spok.color)
@@ -69,6 +74,17 @@ module.exports = function spok(t, obj, specifications, prefix) {
           var rootTopic = specifications.$topic != null ? specifications.$topic + '.' : ''
           spec.$topic = rootTopic + k
         }
+
+        if (Array.isArray(spec)) {
+          if (spec.length === 1) {
+            var newSpec = val.map(function () {
+              return spec[0]
+            })
+            newSpec.$topic = spec.$topic
+            return spok(t, val, newSpec, prefix) 
+          }
+        }
+
         return spok(t, val, spec, prefix)
       default:
         throw new Error('Type ' + typeof spec + ' not yet handled. Please submit a PR')
