@@ -71,11 +71,13 @@ module.exports = function spok(t, obj, specifications, prefix) {
         }
 
         if (Array.isArray(spec)) {
-          var newSpec = val.map(function (value, key) {
-            return spec[key] || spec[0]
-          })
-          newSpec.$topic = spec.$topic
-          return spok(t, val, newSpec, prefix)
+          if (spec.length === 1) {
+            var newSpec = val.map(function () {
+              return spec[0]
+            })
+            newSpec.$topic = spec.$topic
+            return spok(t, val, newSpec, prefix) 
+          }
         }
 
         return spok(t, val, spec, prefix)
