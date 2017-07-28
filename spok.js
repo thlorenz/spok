@@ -44,7 +44,7 @@ module.exports = function spok(t, obj, specifications, prefix) {
     var spec = specifications[k]
 
     if (!obj) {
-      return t.equal(val, spec, prefix + k + ' = ' + insp('undefined', spok.color))
+      return t.equal('undefined', spec, prefix + k + ' = ' + insp('undefined', spok.color) + colors.brightBlack('satisfies: ' + spec.$spec))
     }
 
     var val = obj[k]
