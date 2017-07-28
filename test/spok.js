@@ -311,3 +311,136 @@ test('\nnested specifications in array', function(t) {
   )
   t.end()
 })
+
+test('\nnested specifications in array with autofill', function(t) {
+  init()
+
+  var object = {
+      objArray: [{
+        id: 1,
+        name: 'Some name'
+      },{
+        id: 2,
+        name: 'Other name'
+      }]
+    , stringArray: [ 'h', 'e', 'x', 'y' ]
+    , numberArray: [ 1, 2, 3, 4 ]
+  }
+
+  var objectSpecs = {
+    $topic: 'objectSpecs',
+    id: spok.number,
+    name: spok.string
+  }
+
+  var specs = {
+      $topic: 'spok-test-nested-specs-in-array-autofill'
+    , objArray    : [ objectSpecs ]
+    , stringArray : [ spok.string ]
+    , numberArray : [ spok.number ]
+  }
+
+  spok(assert, object, specs)
+
+  t.deepEqual(equalCalls,
+    [ { actual: 1,
+        expected: 1,
+        msg: 'spok: spok-test-nested-specs-in-array-autofill' },
+      { actual: 1,
+        expected: 1,
+        msg: '·· spok: spok-test-nested-specs-in-array-autofill.objArray' },
+      { actual: 1, expected: 1, msg: '·· ·· spok: objectSpecs' },
+      { actual: true, expected: true, msg: '·· ·· ·· id = 1' },
+      { actual: true,
+        expected: true,
+        msg: '·· ·· ·· name = \'Some name\'' },
+      { actual: 1, expected: 1, msg: '·· ·· spok: objectSpecs' },
+      { actual: true, expected: true, msg: '·· ·· ·· id = 2' },
+      { actual: true,
+        expected: true,
+        msg: '·· ·· ·· name = \'Other name\'' },
+      { actual: 1,
+        expected: 1,
+        msg: '·· spok: spok-test-nested-specs-in-array-autofill.stringArray' },
+      { actual: true, expected: true, msg: '·· ·· 0 = \'h\'' },
+      { actual: true, expected: true, msg: '·· ·· 1 = \'e\'' },
+      { actual: true, expected: true, msg: '·· ·· 2 = \'x\'' },
+      { actual: true, expected: true, msg: '·· ·· 3 = \'y\'' },
+      { actual: 1,
+        expected: 1,
+        msg: '·· spok: spok-test-nested-specs-in-array-autofill.numberArray' },
+      { actual: true, expected: true, msg: '·· ·· 0 = 1' },
+      { actual: true, expected: true, msg: '·· ·· 1 = 2' },
+      { actual: true, expected: true, msg: '·· ·· 2 = 3' },
+      { actual: true, expected: true, msg: '·· ·· 3 = 4' } ]
+    , 'spok executes the correct equal calls'
+  )
+
+  t.end()
+})
+
+test('\nnested specifications in array with autofill invalid', function(t) {
+  init()
+
+  var object = {
+      objArray: [{
+        id: 1,
+        name: 1
+      },{
+        id: '2',
+        name: 'Other name'
+      }]
+    , stringArray: [ 'h', 2, 'x', 'y' ]
+    , numberArray: [ 1, 'h', 3, 4 ]
+  }
+
+  var objectSpecs = {
+    $topic: 'objectSpecs',
+    id: spok.number,
+    name: spok.string
+  }
+
+  var specs = {
+      $topic: 'spok-test-nested-specs-in-array-autofill-invalid'
+    , objArray    : [ objectSpecs ]
+    , stringArray : [ spok.string ]
+    , numberArray : [ spok.number ]
+  }
+
+  spok(assert, object, specs)
+
+  t.deepEqual(equalCalls,
+    [ { actual: 1,
+        expected: 1,
+        msg: 'spok: spok-test-nested-specs-in-array-autofill-invalid' },
+      { actual: 1,
+        expected: 1,
+        msg: '·· spok: spok-test-nested-specs-in-array-autofill-invalid.objArray' },
+      { actual: 1, expected: 1, msg: '·· ·· spok: objectSpecs' },
+      { actual: true, expected: true, msg: '·· ·· ·· id = 1' },
+      { actual: false, expected: true, msg: '·· ·· ·· name = 1' },
+      { actual: 1, expected: 1, msg: '·· ·· spok: objectSpecs' },
+      { actual: false, expected: true, msg: '·· ·· ·· id = \'2\'' },
+      { actual: true,
+        expected: true,
+        msg: '·· ·· ·· name = \'Other name\'' },
+      { actual: 1,
+        expected: 1,
+        msg: '·· spok: spok-test-nested-specs-in-array-autofill-invalid.stringArray' },
+      { actual: true, expected: true, msg: '·· ·· 0 = \'h\'' },
+      { actual: false, expected: true, msg: '·· ·· 1 = 2' },
+      { actual: true, expected: true, msg: '·· ·· 2 = \'x\'' },
+      { actual: true, expected: true, msg: '·· ·· 3 = \'y\'' },
+      { actual: 1,
+        expected: 1,
+        msg: '·· spok: spok-test-nested-specs-in-array-autofill-invalid.numberArray' },
+      { actual: true, expected: true, msg: '·· ·· 0 = 1' },
+      { actual: false, expected: true, msg: '·· ·· 1 = \'h\'' },
+      { actual: true, expected: true, msg: '·· ·· 2 = 3' },
+      { actual: true, expected: true, msg: '·· ·· 3 = 4' } ]
+    , 'spok executes the correct equal calls'
+  )
+
+  t.end()
+})
+
