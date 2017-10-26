@@ -1,0 +1,1690 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>  | Documentation</title>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <link href='assets/bass.css' type='text/css' rel='stylesheet' />
+  <link href='assets/style.css' type='text/css' rel='stylesheet' />
+  <link href='assets/github.css' type='text/css' rel='stylesheet' />
+</head>
+<body class='documentation'>
+  <div class='max-width-4 mx-auto'>
+    <div class='clearfix md-mxn2'>
+      <div class='fixed xs-hide fix-3 overflow-auto max-height-100'>
+        <div class='py1 px2'>
+          <h3 class='mb0 no-anchor'></h3>
+          <div class='mb1'><code></code></div>
+          <input
+            placeholder='Filter'
+            id='filter-input'
+            class='col12 block input'
+            type='text' />
+          <div id='toc'>
+            <ul class='list-reset h5 py1-ul'>
+              
+                
+                <li><a
+                  href='#spok'
+                  class="">
+                  spok
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spokrange'
+                  class="">
+                  spok.range
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spokgt'
+                  class="">
+                  spok.gt
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spokge'
+                  class="">
+                  spok.ge
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spoklt'
+                  class="">
+                  spok.lt
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spokle'
+                  class="">
+                  spok.le
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spokne'
+                  class="">
+                  spok.ne
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spokgtz'
+                  class="">
+                  spok.gtz
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spokgez'
+                  class="">
+                  spok.gez
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spokltz'
+                  class="">
+                  spok.ltz
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spoklez'
+                  class="">
+                  spok.lez
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spoktype'
+                  class="">
+                  spok.type
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spokarray'
+                  class="">
+                  spok.array
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spokarrayelements'
+                  class="">
+                  spok.arrayElements
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spokarrayelementsrange'
+                  class="">
+                  spok.arrayElementsRange
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spoknumber'
+                  class="">
+                  spok.number
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spokstring'
+                  class="">
+                  spok.string
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spokfunction'
+                  class="">
+                  spok.function
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spokdefinedobject'
+                  class="">
+                  spok.definedObject
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spokstartswith'
+                  class="">
+                  spok.startsWith
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spokendswith'
+                  class="">
+                  spok.endsWith
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spoktest'
+                  class="">
+                  spok.test
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spokdefined'
+                  class="">
+                  spok.defined
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spoknotdefined'
+                  class="">
+                  spok.notDefined
+                  
+                </a>
+                
+                </li>
+              
+            </ul>
+          </div>
+          <div class='mt1 h6 quiet'>
+            <a href='http://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
+          </div>
+        </div>
+      </div>
+      <div class='fix-margin-3'>
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spok'>
+      spok
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Checks the given specifications against the object.</p>
+<p>When the tests are run the <strong>actual</strong> values are printed to verify visually while
+each provided specification is validated and a test failure caused if one of them fails.</p>
+
+
+  <div class='pre p1 fill-light mt0'>spok(t: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, obj: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, specifications: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>t</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    which has assertion functions 
+<code>equal</code>
+ and 
+<code>deepEqual</code>
+ (to compare objects) - use
+
+<strong>tap</strong>
+, 
+<strong>tape</strong>
+, 
+<strong>assert</strong>
+ or any other library that has those and thus is compatible
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>obj</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    the object to verify the specifications against
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>specifications</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    the specifications to verify
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spokrange'>
+      spok.range
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specififies that the given number is within the given range, i.e. <code>min&#x3C;= x &#x3C;=max</code>.</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+ <span class="hljs-attr">x</span>: spok.range(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)   <span class="hljs-comment">// specifies that x should be &gt;=1 and &lt;=2</span>
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.range(min: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, max: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>min</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    minimum
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>max</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    maximum
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spokgt'>
+      spok.gt
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specififies that a number is greater than the given criteria.</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+ <span class="hljs-attr">x</span>: spok.gt(<span class="hljs-number">1</span>)  <span class="hljs-comment">// specifies that x should be &gt;1</span>
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.gt(n: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>n</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    criteria
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spokge'>
+      spok.ge
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specififies that a number is greater or equal the given criteria.</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+ <span class="hljs-attr">x</span>: spok.ge(<span class="hljs-number">1</span>)  <span class="hljs-comment">// specifies that x should be &gt;=1</span>
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.ge(n: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>n</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    criteria
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spoklt'>
+      spok.lt
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specififies that a number is less than the given criteria.</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+ <span class="hljs-attr">x</span>: spok.lt(<span class="hljs-number">1</span>)  <span class="hljs-comment">// specifies that x should be &lt; 1</span>
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.lt(n: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>n</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    criteria
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spokle'>
+      spok.le
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specififies that a number is less or equal the given criteria.</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+ <span class="hljs-attr">x</span>: spok.le(<span class="hljs-number">1</span>)  <span class="hljs-comment">// specifies that x should be &lt;=1</span>
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.le(n: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>n</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    criteria
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spokne'>
+      spok.ne
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specifies that the value is not equal another.</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+ <span class="hljs-attr">x</span>: spok.ne(<span class="hljs-literal">undefined</span>)  <span class="hljs-comment">// specifies that x should be defined</span>
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.ne(value: Any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(Any)</code>
+	    criteria
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spokgtz'>
+      spok.gtz
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specifies that the value is greater than zero</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+  <span class="hljs-attr">x</span>: spok.gtz
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.gtz()</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spokgez'>
+      spok.gez
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specifies that the value is greater or equal zero</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+  <span class="hljs-attr">x</span>: spok.gez
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.gez()</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spokltz'>
+      spok.ltz
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specifies that the value is less than zero</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+  <span class="hljs-attr">x</span>: spok.ltz
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.ltz()</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spoklez'>
+      spok.lez
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specifies that the value is less or equal zero</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+  <span class="hljs-attr">x</span>: spok.lez
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.lez()</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spoktype'>
+      spok.type
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specifies that the input is of a given type.</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+ <span class="hljs-attr">x</span>: spok.type(<span class="hljs-string">'number'</span>)  <span class="hljs-comment">// specifies that x should be a Number</span>
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.type(t: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>t</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    expected type
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spokarray'>
+      spok.array
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specifies that the input is an array.</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+ <span class="hljs-attr">x</span>: spok.array  <span class="hljs-comment">// specifies that x should be an Array</span>
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.array()</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spokarrayelements'>
+      spok.arrayElements
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specifies that the input is an array with a specific number of elements</p>
+<p>var spec = {
+x: spok.arrayElements(2)  // specifies that x should be an Array with 2 elements
+}</p>
+
+
+  <div class='pre p1 fill-light mt0'>spok.arrayElements(n: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>n</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    number of elements
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spokarrayelementsrange'>
+      spok.arrayElementsRange
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specifies that the input is an array with a number of elements in a given range</p>
+<p>var spec = {
+x: spok.arrayElementsRange(2, 4)  // specifies that x should be an Array with 2-4 elements
+}</p>
+
+
+  <div class='pre p1 fill-light mt0'>spok.arrayElementsRange(min: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, max: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>min</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    min number of elements
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>max</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    max number of elements
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spoknumber'>
+      spok.number
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specifies that the input of type number and <code>isNaN(x)</code> returns <code>false</code>.</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+ <span class="hljs-attr">x</span>: spok.number  <span class="hljs-comment">// specifies that x should be a Number</span>
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.number()</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spokstring'>
+      spok.string
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specifies that the input is a string.</p>
+<pre><code>var spec = {
+  x: spok.string  // specifies that x should be a String
+}
+</code></pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.string()</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spokfunction'>
+      spok.function
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specifies that the input is a function.</p>
+<pre><code>var spec = {
+  x: spok.function  // specifies that x should be a function
+}
+</code></pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.function()</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spokdefinedobject'>
+      spok.definedObject
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specifies that the input is an object and it is not <code>null</code>.</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+ <span class="hljs-attr">x</span>: spok.definedObject  <span class="hljs-comment">// specifies that x is a non-null object</span>
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.definedObject()</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spokstartswith'>
+      spok.startsWith
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specifies that the string starts with the specified substring.</p>
+<p><strong>NOTE</strong>: only available with node.js which has an ES6 <code>startsWith</code> function</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+ <span class="hljs-attr">x</span>: spok.startsWith(<span class="hljs-string">'hello'</span>)  <span class="hljs-comment">// specifies that x should start with 'hello'</span>
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.startsWith(what: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>what</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    substring the given string should start with
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spokendswith'>
+      spok.endsWith
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specifies that the string ends with the specified substring.</p>
+<p><strong>NOTE</strong>: only available with node.js which has an ES6 <code>endsWith</code> function</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+ <span class="hljs-attr">x</span>: spok.endsWith(<span class="hljs-string">'hello'</span>)  <span class="hljs-comment">// specifies that x should start with 'hello'</span>
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.endsWith(what: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>what</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    substring the given string should start with
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spoktest'>
+      spok.test
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specifies that the string needs to match the given regular expression.</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+  <span class="hljs-attr">x</span>: spok.test(<span class="hljs-regexp">/hello$/</span>) <span class="hljs-comment">// specifies that x should match /hello$/</span>
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.test(regex: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>regex</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a>)</code>
+	    regular expression against which the string is checked via 
+<code>test</code>
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spokdefined'>
+      spok.defined
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specifies that a value is defined, i.e. it is neither <code>null</code> nor <code>undefined</code>.</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+  <span class="hljs-attr">x</span>: spok.defined
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.defined()</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spoknotdefined'>
+      spok.notDefined
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Specifies that a value is notDefined, i.e. it is either <code>null</code> or <code>notDefined</code>.</p>
+<pre class='hljs'><span class="hljs-keyword">var</span> spec = {
+  <span class="hljs-attr">x</span>: spok.notDefined
+}</pre>
+
+
+  <div class='pre p1 fill-light mt0'>spok.notDefined()</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+      </div>
+    </div>
+  </div>
+  <script src='assets/anchor.js'></script>
+  <script src='assets/site.js'></script>
+</body>
+</html>
