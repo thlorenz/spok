@@ -73,31 +73,31 @@ Specs and descriptions are printed in gray so you can focus on the actual values
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [API](#api)
-  - [spok](#spok)
-  - [spok.range](#spokrange)
-  - [spok.gt](#spokgt)
-  - [spok.ge](#spokge)
-  - [spok.lt](#spoklt)
-  - [spok.le](#spokle)
-  - [spok.ne](#spokne)
-  - [spok.gtz](#spokgtz)
-  - [spok.gez](#spokgez)
-  - [spok.ltz](#spokltz)
-  - [spok.lez](#spoklez)
-  - [spok.type](#spoktype)
-  - [spok.array](#spokarray)
-  - [spok.arrayElements](#spokarrayelements)
-  - [spok.number](#spoknumber)
-  - [spok.string](#spokstring)
-  - [spok.function](#spokfunction)
-  - [spok.definedObject](#spokdefinedobject)
-  - [spok.startsWith](#spokstartswith)
-  - [spok.endsWith](#spokendswith)
-  - [spok.test](#spoktest)
-  - [spok.defined](#spokdefined)
-  - [spok.notDefined](#spoknotdefined)
-- [License](#license)
+-   [API](#api)
+    -   [spok](#spok)
+    -   [spok.range](#spokrange)
+    -   [spok.gt](#spokgt)
+    -   [spok.ge](#spokge)
+    -   [spok.lt](#spoklt)
+    -   [spok.le](#spokle)
+    -   [spok.ne](#spokne)
+    -   [spok.gtz](#spokgtz)
+    -   [spok.gez](#spokgez)
+    -   [spok.ltz](#spokltz)
+    -   [spok.lez](#spoklez)
+    -   [spok.type](#spoktype)
+    -   [spok.array](#spokarray)
+    -   [spok.arrayElements](#spokarrayelements)
+    -   [spok.number](#spoknumber)
+    -   [spok.string](#spokstring)
+    -   [spok.function](#spokfunction)
+    -   [spok.definedObject](#spokdefinedobject)
+    -   [spok.startsWith](#spokstartswith)
+    -   [spok.endsWith](#spokendswith)
+    -   [spok.test](#spoktest)
+    -   [spok.defined](#spokdefined)
+    -   [spok.notDefined](#spoknotdefined)
+-   [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -281,12 +281,25 @@ var spec = {
 Specifies that the input is an array with a specific number of elements
 
 var spec = {
- x: spok.arrayElements(2)  // specifies that x should be an Array witn 2 elements
+ x: spok.arrayElements(2)  // specifies that x should be an Array with 2 elements
 }
 
 **Parameters**
 
 -   `n` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** number of elements
+
+### spok.arrayElementsRange
+
+Specifies that the input is an array with a number of elements in a given range
+
+var spec = {
+ x: spok.arrayElementsRange(2, 4)  // specifies that x should be an Array with 2-4 elements
+}
+
+**Parameters**
+
+-   `min` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** min number of elements
+-   `max` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** max number of elements
 
 ### spok.number
 
