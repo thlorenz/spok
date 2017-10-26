@@ -100,6 +100,11 @@ test('\nspecifications in isolation', function(t) {
   t.ok(spok.arrayElements(2)([ 1, 2 ]), 'arrayElements [ 1, 2 ] is 2')
   t.ok(!spok.arrayElements(3)([ 1, 2 ]), 'arrayElements [ 1, 2 ] is not 3')
 
+  t.ok(spok.arrayElementsRange(0, 1)([]), 'arrayElementsRange [] is between 0 and 1')
+  t.ok(!spok.arrayElementsRange(0, 1)({}), 'not array range {}')
+  t.ok(spok.arrayElementsRange(0, 1)([ 1 ]), 'arrayElementsRange [ 1 ] is between 0 and 1')
+  t.ok(!spok.arrayElementsRange(2, 3)([ 1 ]), 'arrayElementsRange [ 1 ] is not between 2 and 3')
+
   t.ok(spok.type('function')(function() {}), 'type function, function () {}')
   t.ok(!spok.type('function')(1), 'not type function, 1')
   t.ok(!spok.type('function')(null), 'not type function, null')
