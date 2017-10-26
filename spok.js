@@ -332,7 +332,7 @@ spok.array.$description = 'values ia an Array'
  * Specifies that the input is an array with a specific number of elements
  *
  * var spec = {
- *  x: spok.arrayElements(2)  // specifies that x should be an Array witn 2 elements
+ *  x: spok.arrayElements(2)  // specifies that x should be an Array with 2 elements
  * }
  *
  * @name spok.arrayElements
@@ -350,6 +350,32 @@ spok.arrayElements = function arrayElements(n) {
   }
   checkCount.$spec = 'spok.arrayElements(' + n + ')'
   checkCount.$description = 'array has ' + n + ' element(s)'
+  return checkCount
+}
+
+/**
+ * Specifies that the input is an array with a number of elements in a given range
+ *
+ * var spec = {
+ *  x: spok.arrayElementsRange(2, 4)  // specifies that x should be an Array with 2-4 elements
+ * }
+ *
+ * @name spok.arrayElementsRange
+ * @function
+ * @param {Number} min min number of elements
+ * @param {Number} max max number of elements
+ */
+spok.arrayElementsRange = function arrayElementsRange(min, max) {
+  function checkCount(array) {
+    if (array == null) {
+      return console.error('Expected between %d and %d, but found array to be null.', min, max)
+    }
+    var pass = spok.array(array) && array.length >= min && array.length <= max
+    if (!pass) console.error('Expected between %d and %d, but found %d elements.', min, max, array.length)
+    return pass
+  }
+  checkCount.$spec = 'spok.arrayElementsRange(' + min + ', ' + max + ')'
+  checkCount.$description = 'array has between' + min + ' and ' + max + ' elements'
   return checkCount
 }
 
