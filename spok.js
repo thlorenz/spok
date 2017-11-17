@@ -71,7 +71,7 @@ module.exports = function spok(t, obj, specifications, prefix) {
         }
         return spok(t, val, spec, prefix)
       default:
-        throw new Error('Type ' + typeof spec + ' not yet handled. Please submit a PR')
+        throw new Error('at key "' + k + '" Type ' + typeof spec + ' not yet handled. Please submit a PR')
     }
   }
 
