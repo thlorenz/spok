@@ -1,19 +1,25 @@
-'use strict'
-var insp = require('./inspect')
-var colors = require('ansicolors')
+import colors from 'ansicolors'
+import {Test} from 'tape'
+import insp from './inspect'
 
 // only recurse into arrays if they contain actual specs or objects
-function needRecurseArray(arr) {
-  for (var i = 0; i < arr.length; i++) {
-    var el = arr[i]
-    if (typeof el !== 'number' && typeof el !== 'string' && el != null) return true
+function needRecurseArray(arr: Array<number | string | null>): boolean {
+  for (const el of arr) {
+    if (typeof el !== 'number' &&
+      typeof el !== 'string' &&
+      el != null) {
+      return true
+    }
   }
   return false
 }
 
-function needRecurse(spec) {
+function needRecurse(
+  spec: Array<number | string | null>
+    | number | string | null): boolean {
   if (Array.isArray(spec)) return needRecurseArray(spec)
-  var keys = Object.keys(spec)
+  if (spec == null) return false
+  const keys = Object.keys(spec)
   if (keys.length === 0) return false
 
   // if no spok functions are part of the spec, we could use deepEqual, but
@@ -22,41 +28,111 @@ function needRecurse(spec) {
   return true
 }
 
+interface Specifications extends Object {
+  $topic?: string,
+  $spec?: string
+  $description?: string
+}
+
+interface Specification<T> extends Specifications {
+  (val: T): boolean
+}
+
+interface Spok {
+  (t: Test,
+   obj: object,
+   specifications: Specifications,
+   prefix?: string | null): void
+
+  printSpec: boolean
+  printDescription: boolean
+  sound: boolean
+  color: boolean
+
+  gtz: Specification<number>
+  gez: Specification<number>
+  ltz: Specification<number>
+  lez: Specification<number>
+  array: Specification<[]>
+  number: Specification<any>
+  string: Specification<any>
+  function: Specification<any>
+  definedObject: Specification<object | null>
+  defined: Specification<object | null>
+  notDefined: Specification<object | null>
+
+  range(min: number, max: number): Specification<number>
+
+  gt(x: number): Specification<number>
+
+  ge(x: number): Specification<number>
+
+  lt(x: number): Specification<number>
+
+  le(x: number): Specification<number>
+
+  ne(x: number): Specification<number>
+
+  type(x: string): Specification<any>
+
+  arrayElements(n: number): Specification<[]>
+
+  arrayElementsRange(min: number, max: number): Specification<[]>
+
+  startsWith(what: string): Specification<string>
+
+  endsWith(what: string): Specification<string>
+
+  test(regex: RegExp): Specification<string>
+
+}
+
 /**
  * Checks the given specifications against the object.
  *
- * When the tests are run the **actual** values are printed to verify visually while
- * each provided specification is validated and a test failure caused if one of them fails.
+ * When the tests are run the **actual** values are printed
+ * to verify visually while each provided specification is validated
+ * and a test failure caused if one of them fails.
  *
- * @name spok
  * @function
- * @param {Object} t which has assertion functions `equal` and `deepEqual` (to compare objects) - use
- * **tap**, **tape**, **assert** or any other library that has those and thus is compatible
+ *
+ * @param {Object} t which has assertion functions `equal` and
+ * `deepEqual` (to compare objects) - use * **tap**, **tape**,
+ * **assert** or any other library that has those and thus is compatible
+ *
  * @param {Object} obj the object to verify the specifications against
- * @param {Object} specifications the specifications to verify
+ * @param {Specifications} specifications the specifications to verify
+ * @param {String } prefix added to messages
  */
-module.exports = function spok(t, obj, specifications, prefix) {
-  prefix = typeof prefix === 'string' ? prefix : ''
+const spok: Spok = (
+  t: Test,
+  obj: object,
+  specifications: Specifications,
+  prefix: string | null = ''
+) => {
 
-  function check(k) {
+  function check(k: string) {
     if (k === '$topic' || k === '$spec' || k === '$description') return
 
-    var spec = specifications[k]
-    var val = obj[k]
+    // @ts-ignore
+    const spec = specifications[k]
+    // @ts-ignore
+    const val = obj[k]
 
-    var msg = prefix + k + ' = ' + insp(val, spok.color)
+    let msg = prefix + k + ' = ' + insp(val, spok.color)
     if (spec != null) {
       if (spec.$spec == null && spec.name != null && spec.name.length > 0) {
         spec.$spec = spec.name
       }
-      var ps = !!spok.printSpec && spec.$spec != null
-      var pd = !!spok.printDescription && spec.$description != null
+      const ps = spok.printSpec && spec.$spec != null
+      const pd = spok.printDescription && spec.$description != null
       if (ps) msg += '  ' + colors.brightBlack('satisfies: ' + spec.$spec)
       if (pd) msg += '  ' + colors.brightBlack(spec.$description)
     }
 
     switch (typeof spec) {
-      case 'function': return t.equal(!!spec(val), true, msg)
+      case 'function':
+        return t.equal(!!spec!(val), true, msg)
       case 'boolean':
       case 'number':
       case 'string':
@@ -66,16 +142,20 @@ module.exports = function spok(t, obj, specifications, prefix) {
         if (!needRecurse(spec)) return t.deepEqual(val, spec, msg)
 
         if (spec.$topic == null) {
-          var rootTopic = specifications.$topic != null ? specifications.$topic + '.' : ''
+          const rootTopic = specifications.$topic != null
+            ? specifications.$topic + '.'
+            : ''
           spec.$topic = rootTopic + k
         }
         return spok(t, val, spec, prefix)
       default:
-        throw new Error('at key "' + k + '" Type ' + typeof spec + ' not yet handled. Please submit a PR')
+        throw new Error(
+          'at key "' + k + '" Type ' + typeof spec +
+          ' not yet handled. Please submit a PR')
     }
   }
 
-  if (specifications.$topic) {
+  if (specifications.$topic != null) {
     // print indicator that a specific spec started being evaluated
     t.equal(1, 1, prefix + 'spok: ' + specifications.$topic)
     prefix = prefix + '·· '
@@ -85,10 +165,11 @@ module.exports = function spok(t, obj, specifications, prefix) {
   Object.keys(specifications).forEach(check)
 
   // provide confirmation that spec is done
-  if (spok.sound) require('child_process').execSync('say spokie dokie -v Vicki -r 600')
+  if (spok.sound) {
+    require('child_process')
+      .execSync('say spokie dokie -v Vicki -r 600')
+  }
 }
-
-var spok = module.exports
 
 spok.printSpec = true
 spok.printDescription = false
@@ -96,7 +177,8 @@ spok.sound = false
 spok.color = true
 
 /**
- * Specififies that the given number is within the given range, i.e. `min<= x <=max`.
+ * Specififies that the given number is within the given range,
+ * i.e. `min<= x <=max`.
  *
  * ```js
  * var spec = {
@@ -104,22 +186,22 @@ spok.color = true
  * }
  * ```
  *
- * @name spok.range
  * @function
  * @param {Number} min minimum
  * @param {Number} max maximum
  */
-spok.range = function range(min, max) {
-  function checkRange(x) {
+spok.range = function range(min: number, max: number) {
+  function checkRange(x: number) {
     return spok.number(x) && min <= x && x <= max
   }
+
   checkRange.$spec = 'spok.range(' + min + ', ' + max + ')'
   checkRange.$description = min + ' <= value <= ' + max
   return checkRange
 }
 
 /**
- * Specififies that a number is greater than the given criteria.
+ * Specifies that a number is greater than the given criteria.
  *
  * ```js
  * var spec = {
@@ -127,14 +209,14 @@ spok.range = function range(min, max) {
  * }
  * ```
  *
- * @name spok.gt
  * @function
  * @param {Number} n criteria
  */
-spok.gt = function gt(n) {
-  function checkgt(x) {
+spok.gt = function gt(n: number) {
+  function checkgt(x: number) {
     return spok.number(x) && x > n
   }
+
   checkgt.$spec = 'spok.gt(' + n + ')'
   checkgt.$description = 'value > ' + n
   return checkgt
@@ -149,14 +231,14 @@ spok.gt = function gt(n) {
  * }
  * ```
  *
- * @name spok.ge
  * @function
  * @param {Number} n criteria
  */
-spok.ge = function ge(n) {
-  function checkge(x) {
+spok.ge = function ge(n: number) {
+  function checkge(x: number) {
     return spok.number(x) && x >= n
   }
+
   checkge.$spec = 'spok.ge(' + n + ')'
   checkge.$description = 'value >= ' + n
   return checkge
@@ -171,14 +253,14 @@ spok.ge = function ge(n) {
  * }
  * ```
  *
- * @name spok.lt
  * @function
  * @param {Number} n criteria
  */
-spok.lt = function lt(n) {
-  function checklt(x) {
+spok.lt = function lt(n: number) {
+  function checklt(x: number) {
     return spok.number(x) && x < n
   }
+
   checklt.$spec = 'spok.lt(' + n + ')'
   checklt.$description = 'value < ' + n
   return checklt
@@ -193,14 +275,14 @@ spok.lt = function lt(n) {
  * }
  * ```
  *
- * @name spok.le
  * @function
  * @param {Number} n criteria
  */
-spok.le = function le(n) {
-  function checkle(x) {
+spok.le = function le(n: number) {
+  function checkle(x: number) {
     return spok.number(x) && x <= n
   }
+
   checkle.$spec = 'spok.le(' + n + ')'
   checkle.$description = 'value <= ' + n
   return checkle
@@ -215,14 +297,14 @@ spok.le = function le(n) {
  * }
  * ```
  *
- * @name spok.ne
  * @function
  * @param {Any} value criteria
  */
-spok.ne = function ne(value) {
-  function checkne(x) {
+spok.ne = function ne(value: number) {
+  function checkne(x: number) {
     return value !== x
   }
+
   checkne.$spec = 'spok.ne(' + value + ')'
   checkne.$description = 'value !== ' + value
   return checkne
@@ -236,7 +318,6 @@ spok.ne = function ne(value) {
  *   x: spok.gtz
  * }
  * ```
- * @name spok.gtz
  * @function
  */
 spok.gtz = spok.gt(0)
@@ -251,7 +332,6 @@ spok.gtz.$description = 'value > 0'
  *   x: spok.gez
  * }
  * ```
- * @name spok.gez
  * @function
  */
 spok.gez = spok.ge(0)
@@ -266,7 +346,6 @@ spok.gez.$description = 'value >= 0'
  *   x: spok.ltz
  * }
  * ```
- * @name spok.ltz
  * @function
  */
 spok.ltz = spok.lt(0)
@@ -281,7 +360,6 @@ spok.ltz.$description = 'value < 0'
  *   x: spok.lez
  * }
  * ```
- * @name spok.lez
  * @function
  */
 spok.lez = spok.le(0)
@@ -297,14 +375,14 @@ spok.lez.$description = 'value <= 0'
  * }
  * ```
  *
- * @name spok.type
  * @function
  * @param {String} t expected type
  */
-spok.type = function type(t) {
-  function checkType(x) {
+spok.type = function type(t: string) {
+  function checkType(x: any) {
     return typeof x === t
   }
+
   checkType.$spec = 'spok.type(' + t + ')'
   checkType.$description = 'value is of type ' + t
   return checkType
@@ -319,10 +397,9 @@ spok.type = function type(t) {
  * }
  * ```
  *
- * @name spok.array
  * @function
  */
-spok.array = function array(x) {
+spok.array = function array(x: any) {
   return Array.isArray(x)
 }
 spok.array.$spec = 'spok.array'
@@ -332,50 +409,66 @@ spok.array.$description = 'values ia an Array'
  * Specifies that the input is an array with a specific number of elements
  *
  * var spec = {
- *  x: spok.arrayElements(2)  // specifies that x should be an Array with 2 elements
+ *  // specifies that x should be an Array with 2 elements
+ *  x: spok.arrayElements(2)
  * }
  *
- * @name spok.arrayElements
  * @function
  * @param {Number} n number of elements
  */
-spok.arrayElements = function arrayElements(n) {
-  function checkCount(array) {
+spok.arrayElements = function arrayElements(n: number) {
+  function checkCount(array: []) {
     if (array == null) {
-      return console.error('Expected %d, but found array to be null.', n)
+      console.error('Expected %d, but found array to be null.', n)
+      return false
     }
-    var pass = spok.array(array) && array.length === n
-    if (!pass) console.error('Expected %d, but found %d elements.', n, array.length)
+    const pass = spok.array(array) && array.length === n
+    if (!pass) {
+      console.error('Expected %d, but found %d elements.', n, array.length)
+    }
     return pass
   }
+
   checkCount.$spec = 'spok.arrayElements(' + n + ')'
   checkCount.$description = 'array has ' + n + ' element(s)'
   return checkCount
 }
 
 /**
- * Specifies that the input is an array with a number of elements in a given range
+ * Specifies that the input is an array with a number of elements
+ * in a given range
  *
  * var spec = {
- *  x: spok.arrayElementsRange(2, 4)  // specifies that x should be an Array with 2-4 elements
+ *  // specifies that x should be an Array with 2-4 elements
+ *  x: spok.arrayElementsRange(2, 4)
  * }
  *
- * @name spok.arrayElementsRange
  * @function
  * @param {Number} min min number of elements
  * @param {Number} max max number of elements
  */
-spok.arrayElementsRange = function arrayElementsRange(min, max) {
-  function checkCount(array) {
+spok.arrayElementsRange = function arrayElementsRange(
+  min: number, max: number) {
+  function checkCount(array: []) {
     if (array == null) {
-      return console.error('Expected between %d and %d, but found array to be null.', min, max)
+      console.error(
+        'Expected between %d and %d, but found array to be null.', min, max)
+      return false
     }
-    var pass = spok.array(array) && array.length >= min && array.length <= max
-    if (!pass) console.error('Expected between %d and %d, but found %d elements.', min, max, array.length)
+    const pass = spok.array(array) && array.length >= min && array.length <= max
+    if (!pass) {
+      console.error(
+        'Expected between %d and %d, but found %d elements.',
+        min, max, array.length
+      )
+    }
     return pass
+
   }
+
   checkCount.$spec = 'spok.arrayElementsRange(' + min + ', ' + max + ')'
-  checkCount.$description = 'array has between' + min + ' and ' + max + ' elements'
+  checkCount.$description = 'array has between'
+    + min + ' and ' + max + ' elements'
   return checkCount
 }
 
@@ -388,10 +481,9 @@ spok.arrayElementsRange = function arrayElementsRange(min, max) {
  * }
  * ```
  *
- * @name spok.number
  * @function
  */
-spok.number = function number(x) {
+spok.number = function number(x: any) {
   return typeof x === 'number' && !isNaN(x)
 }
 spok.number.$spec = 'spok.number'
@@ -406,7 +498,6 @@ spok.number.$description = 'value is a number'
  * }
  * ```
  *
- * @name spok.string
  * @function
  */
 spok.string = spok.type('string')
@@ -422,7 +513,6 @@ spok.string.$description = 'value is a string'
  * }
  * ```
  *
- * @name spok.function
  * @function
  */
 spok.function = spok.type('function')
@@ -438,7 +528,6 @@ spok.function.$description = 'value is a function'
  * }
  * ```
  *
- * @name spok.definedObject
  * @function
  */
 spok.definedObject = function definedObject(x) {
@@ -458,16 +547,17 @@ spok.definedObject.$description = 'value is defined and of type object'
  * }
  * ```
  *
- * @name spok.startsWith
  * @function
  * @param {String} what substring the given string should start with
  */
-spok.startsWith = function startsWith(what) {
-  function checkStartsWith(x) {
-    var res = x && typeof x.startsWith === 'function' && x.startsWith(what)
+spok.startsWith = function startsWith(what: string) {
+  function checkStartsWith(x: string) {
+    const res = x != null && typeof x.startsWith === 'function'
+      && x.startsWith(what)
     if (!res) console.error('"%s" does not start with "%s"', x, what)
     return res
   }
+
   checkStartsWith.$spec = 'spok.startsWith(' + what + ')'
   checkStartsWith.$description = 'string starts with ' + what
   return checkStartsWith
@@ -484,16 +574,17 @@ spok.startsWith = function startsWith(what) {
  * }
  * ```
  *
- * @name spok.endsWith
  * @function
  * @param {String} what substring the given string should start with
  */
-spok.endsWith = function endsWith(what) {
-  function checkEndsWith(x) {
-    var res = x && typeof x.endsWith === 'function' && x.endsWith(what)
+spok.endsWith = function endsWith(what: string) {
+  function checkEndsWith(x: string) {
+    const res = x != null && typeof x.endsWith === 'function'
+      && x.endsWith(what)
     if (!res) console.error('"%s" does not start with "%s"', x, what)
     return res
   }
+
   checkEndsWith.$spec = 'spok.endsWith(' + what + ')'
   checkEndsWith.$description = 'string ends with ' + what
   return checkEndsWith
@@ -504,28 +595,31 @@ spok.endsWith = function endsWith(what) {
  *
  * ```js
  * var spec = {
- *   x: spok.test(/hello$/) // specifies that x should match /hello$/
+ *  // specifies that x should match /hello$/
+ *   x: spok.test(/hello$/)
  * }
  * ```
  *
- * @name spok.test
  * @function
- * @param {RegExp} regex regular expression against which the string is checked via `test`
+ * @param {RegExp} regex regular expression against
+ * which the string is checked via `test`
  */
-spok.test = function test(regex) {
-  function checkTest(x) {
-    var res = regex.test(x)
+spok.test = function test(regex: RegExp) {
+  function checkTest(x: string) {
+    const res = regex.test(x)
     if (!res) console.error('"%s" does not match \n%s', x, regex.toString())
     return res
   }
-  var s = regex.toString()
+
+  const s = regex.toString()
   checkTest.$spec = 'spok.test(' + s + ')'
   checkTest.$description = 'value matches ' + s + ' regex'
   return checkTest
 }
 
 /**
- * Specifies that a value is defined, i.e. it is neither `null` nor `undefined`.
+ * Specifies that a value is defined,
+ * i.e. it is neither `null` nor `undefined`.
  *
  * ```js
  * var spec = {
@@ -533,7 +627,6 @@ spok.test = function test(regex) {
  * }
  * ```
  *
- * @name spok.defined
  * @function
  */
 spok.defined = function defined(x) {
@@ -543,7 +636,8 @@ spok.defined.$spec = 'spok.defined'
 spok.defined.$description = 'value is neither null nor undefined'
 
 /**
- * Specifies that a value is notDefined, i.e. it is either `null` or `notDefined`.
+ * Specifies that a value is notDefined,
+ * i.e. it is either `null` or `notDefined`.
  *
  * ```js
  * var spec = {
@@ -551,7 +645,6 @@ spok.defined.$description = 'value is neither null nor undefined'
  * }
  * ```
  *
- * @name spok.notDefined
  * @function
  */
 spok.notDefined = function notDefined(x) {
@@ -559,3 +652,5 @@ spok.notDefined = function notDefined(x) {
 }
 spok.notDefined.$spec = 'spok.notDefined'
 spok.notDefined.$description = 'value is either null or undefined'
+
+export default spok

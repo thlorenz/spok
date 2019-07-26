@@ -1,7 +1,7 @@
 'use strict'
 
-var test = require('tape')
-var spok = require('../')
+const test = require('tape');
+const spok = require('../dist/spok').default;
 spok.printSpec = false
 
 // eslint-disable-next-line no-unused-vars

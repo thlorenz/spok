@@ -2,17 +2,27 @@
   "name": "spok",
   "version": "0.9.1",
   "description": "Checks a given object against a given set of specifications to keep you from writing boilerplate tests.",
-  "main": "spok.js",
+  "main": "dist/spok.js",
+  "typings": "dist/spok.d.ts",
+  "files": [ "dist" ],
+  "directories": {
+    "dist": "./dist"
+  },
   "scripts": {
     "test-main": "tape test/*.js",
-    "test-4": "nave use 4 npm run test-main",
-    "test-6": "nave use 6 npm run test-main",
     "test-8": "nave use 8 npm run test-main",
-    "test-all": "npm run test-main && npm run test-4 && npm run test-6 && npm run test-8",
-    "test": "if [ -e $TRAVIS ]; then npm run test-all; else npm run test-main; fi"
+    "test-10": "nave use 10 npm run test-main",
+    "test-all": "npm run test-main && npm run test-8 && npm run test-10",
+    "test": "if [ -e $TRAVIS ]; then npm run test-all; else npm run test-main; fi",
+    "tsc": "rm -rf dist/* && tsc -p . --declaration",
+    "tsc:watch": "rm -rf dist/* && tsc -p . --watch --declaration",
+    "tsl": "tslint -p . --force -t stylish",
+    "tsl:fix": "tslint -p . --force -t stylish --fix",
+    "tsfmt": "tsfmt --baseDir . -r",
+    "lint": "npm run tsc &&  npm run tsl"
   },
   "browser": {
-    "./inspect.js": "./inspect-browser.js"
+    "./dist/inspect.js": "./dist/inspect-browser.js"
   },
   "repository": {
     "type": "git",
@@ -23,8 +33,13 @@
     "ansicolors": "~0.3.2"
   },
   "devDependencies": {
+    "@types/ansicolors": "0.0.31",
+    "@types/tape": "^4.2.33",
     "nave": "~2.2.3",
-    "tape": "~4.0.0"
+    "tape": "~4.0.0",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.3",
+    "typescript-formatter": "^7.2.2"
   },
   "keywords": [
     "test",
@@ -45,7 +60,7 @@
     "url": "https://github.com/thlorenz/spok/blob/master/LICENSE"
   },
   "engine": {
-    "node": ">=0.8"
+    "node": ">=10"
   },
   "testling": {
     "files": "test/*.js",

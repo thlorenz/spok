@@ -1,0 +1,1 @@
+{"version":3,"file":"inspect-browser.js","sourceRoot":"","sources":["../src/inspect-browser.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,2CAA4B;AAC5B,kDAAyB;AAEzB,qDAAqD;AACrD,cAAI,CAAC,KAAK,GAAG,KAAK,CAAA;AAElB,SAAwB,OAAO,CAAC,GAAQ,EAAE,KAAc;IACtD,OAAO,IAAI,CAAC,OAAO,CAAC,GAAG,EAAE,KAAK,EAAE,CAAC,EAAE,KAAK,CAAC,CAAA;AAC3C,CAAC;AAFD,0BAEC"}
