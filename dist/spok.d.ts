@@ -2,7 +2,7 @@ declare type Assert = {
     equal(actual: any, expected: any, msg?: string): void;
     deepEqual(actual: any, expected: any, msg?: string): void;
 };
-interface Specifications extends Object {
+export interface Specifications extends Record<string, any> {
     $topic?: string;
     $spec?: string;
     $description?: string;

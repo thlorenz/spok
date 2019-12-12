@@ -30,7 +30,7 @@ function needRecurse(
   return true
 }
 
-interface Specifications extends Object {
+export interface Specifications extends Record<string, any> {
   $topic?: string
   $spec?: string
   $description?: string
