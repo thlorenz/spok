@@ -262,6 +262,9 @@ test('\nnested specifications all valid', function(t) {
     ],
     'spok executes the correct equal calls'
   )
+  // Mitigating inconsistencies between Node.js versions
+  delete deepEqualCalls[0].msg
+
   t.deepEqual(
     deepEqualCalls,
     [
@@ -278,8 +281,6 @@ test('\nnested specifications all valid', function(t) {
           'read.resource.context.callback',
           'close.resource.context.callback',
         ],
-        msg:
-          "·· propertyPaths = [ 'open.resource.context.callback',\n  'stat.resource.context.callback',\n  'read.resource.context.callback',\n  'close.resource.context.callback' ]",
       },
     ],
     'spok executes the correct equal calls'

@@ -11,10 +11,11 @@
     "dist": "./dist"
   },
   "scripts": {
-    "test-main": "tape test/*.js",
+    "test-main": "set -e; for t in test/*.js; do node $t; done",
     "test-8": "nave use 8 npm run test-main",
     "test-10": "nave use 10 npm run test-main",
-    "test-all": "npm run test-main && npm run test-8 && npm run test-10",
+    "test-12": "nave use 12 npm run test-main",
+    "test-all": "npm run test-main && npm run test-8 && npm run test-10 && npm run test-12",
     "test:unit": "if [ -e $TRAVIS ]; then npm run test-all; else npm run test-main; fi",
     "test": "npm run lint && npm run test:unit",
     "tsc": "rm -rf dist/* && tsc -p . --declaration",
