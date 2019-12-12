@@ -1,6 +1,10 @@
 import colors from 'ansicolors'
-import {Test} from 'tape'
 import insp from './inspect'
+
+type Assert = {
+  equal(actual: any, expected: any, msg?: string): void
+  deepEqual(actual: any, expected: any, msg?: string): void
+}
 
 // only recurse into arrays if they contain actual specs or objects
 function needRecurseArray(arr: Array<number | string | null>): boolean {
@@ -39,7 +43,7 @@ interface Specification<T> extends Specifications {
 }
 
 interface Spok {
-  (t: Test,
+  (t: Assert,
    obj: object,
    specifications: Specifications,
    prefix?: string | null): void
@@ -105,7 +109,7 @@ interface Spok {
  * @param {String } prefix added to messages
  */
 const spok: Spok = (
-  t: Test,
+  t: Assert,
   obj: object,
   specifications: Specifications,
   prefix: string | null = ''
