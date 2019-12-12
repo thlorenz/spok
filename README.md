@@ -1,4 +1,4 @@
-# spok [![build status](https://secure.travis-ci.org/thlorenz/spok.png)](http://travis-ci.org/thlorenz/spok)
+# spok [![](https://github.com/thlorenz/spok/workflows/Node%20CI/badge.svg?branch=master)](https://github.com/thlorenz/spok/actions)
 
 [![testling badge](https://ci.testling.com/thlorenz/spok.png)](https://ci.testling.com/thlorenz/spok)
 
