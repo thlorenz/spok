@@ -8,9 +8,7 @@ const inspect_1 = __importDefault(require("./inspect"));
 // only recurse into arrays if they contain actual specs or objects
 function needRecurseArray(arr) {
     for (const el of arr) {
-        if (typeof el !== 'number' &&
-            typeof el !== 'string' &&
-            el != null) {
+        if (typeof el !== 'number' && typeof el !== 'string' && el != null) {
             return true;
         }
     }
@@ -79,14 +77,15 @@ const spok = (t, obj, specifications, prefix = '') => {
                 if (!needRecurse(spec))
                     return t.deepEqual(val, spec, msg);
                 if (spec.$topic == null) {
-                    const rootTopic = specifications.$topic != null
-                        ? specifications.$topic + '.'
-                        : '';
+                    const rootTopic = specifications.$topic != null ? specifications.$topic + '.' : '';
                     spec.$topic = rootTopic + k;
                 }
                 return spok(t, val, spec, prefix);
             default:
-                throw new Error('at key "' + k + '" Type ' + typeof spec +
+                throw new Error('at key "' +
+                    k +
+                    '" Type ' +
+                    typeof spec +
                     ' not yet handled. Please submit a PR');
         }
     }
@@ -99,8 +98,7 @@ const spok = (t, obj, specifications, prefix = '') => {
     Object.keys(specifications).forEach(check);
     // provide confirmation that spec is done
     if (spok.sound) {
-        require('child_process')
-            .execSync('say spokie dokie -v Vicki -r 600');
+        require('child_process').execSync('say spokie dokie -v Vicki -r 600');
     }
 };
 spok.printSpec = true;
@@ -370,8 +368,8 @@ spok.arrayElementsRange = function arrayElementsRange(min, max) {
         return pass;
     }
     checkCount.$spec = 'spok.arrayElementsRange(' + min + ', ' + max + ')';
-    checkCount.$description = 'array has between'
-        + min + ' and ' + max + ' elements';
+    checkCount.$description =
+        'array has between' + min + ' and ' + max + ' elements';
     return checkCount;
 };
 /**
@@ -450,8 +448,7 @@ spok.definedObject.$description = 'value is defined and of type object';
  */
 spok.startsWith = function startsWith(what) {
     function checkStartsWith(x) {
-        const res = x != null && typeof x.startsWith === 'function'
-            && x.startsWith(what);
+        const res = x != null && typeof x.startsWith === 'function' && x.startsWith(what);
         if (!res)
             console.error('"%s" does not start with "%s"', x, what);
         return res;
@@ -476,8 +473,7 @@ spok.startsWith = function startsWith(what) {
  */
 spok.endsWith = function endsWith(what) {
     function checkEndsWith(x) {
-        const res = x != null && typeof x.endsWith === 'function'
-            && x.endsWith(what);
+        const res = x != null && typeof x.endsWith === 'function' && x.endsWith(what);
         if (!res)
             console.error('"%s" does not start with "%s"', x, what);
         return res;

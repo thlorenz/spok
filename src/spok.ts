@@ -9,9 +9,7 @@ type Assert = {
 // only recurse into arrays if they contain actual specs or objects
 function needRecurseArray(arr: Array<number | string | null>): boolean {
   for (const el of arr) {
-    if (typeof el !== 'number' &&
-      typeof el !== 'string' &&
-      el != null) {
+    if (typeof el !== 'number' && typeof el !== 'string' && el != null) {
       return true
     }
   }
@@ -19,8 +17,8 @@ function needRecurseArray(arr: Array<number | string | null>): boolean {
 }
 
 function needRecurse(
-  spec: Array<number | string | null>
-    | number | string | null): boolean {
+  spec: Array<number | string | null> | number | string | null
+): boolean {
   if (Array.isArray(spec)) return needRecurseArray(spec)
   if (spec == null) return false
   const keys = Object.keys(spec)
@@ -33,7 +31,7 @@ function needRecurse(
 }
 
 interface Specifications extends Object {
-  $topic?: string,
+  $topic?: string
   $spec?: string
   $description?: string
 }
@@ -43,10 +41,12 @@ interface Specification<T> extends Specifications {
 }
 
 interface Spok {
-  (t: Assert,
-   obj: object,
-   specifications: Specifications,
-   prefix?: string | null): void
+  (
+    t: Assert,
+    obj: object,
+    specifications: Specifications,
+    prefix?: string | null
+  ): void
 
   printSpec: boolean
   printDescription: boolean
@@ -88,7 +88,6 @@ interface Spok {
   endsWith(what: string): Specification<string>
 
   test(regex: RegExp): Specification<string>
-
 }
 
 /**
@@ -114,7 +113,6 @@ const spok: Spok = (
   specifications: Specifications,
   prefix: string | null = ''
 ) => {
-
   function check(k: string) {
     if (k === '$topic' || k === '$spec' || k === '$description') return
 
@@ -146,16 +144,19 @@ const spok: Spok = (
         if (!needRecurse(spec)) return t.deepEqual(val, spec, msg)
 
         if (spec.$topic == null) {
-          const rootTopic = specifications.$topic != null
-            ? specifications.$topic + '.'
-            : ''
+          const rootTopic =
+            specifications.$topic != null ? specifications.$topic + '.' : ''
           spec.$topic = rootTopic + k
         }
         return spok(t, val, spec, prefix)
       default:
         throw new Error(
-          'at key "' + k + '" Type ' + typeof spec +
-          ' not yet handled. Please submit a PR')
+          'at key "' +
+            k +
+            '" Type ' +
+            typeof spec +
+            ' not yet handled. Please submit a PR'
+        )
     }
   }
 
@@ -170,8 +171,7 @@ const spok: Spok = (
 
   // provide confirmation that spec is done
   if (spok.sound) {
-    require('child_process')
-      .execSync('say spokie dokie -v Vicki -r 600')
+    require('child_process').execSync('say spokie dokie -v Vicki -r 600')
   }
 }
 
@@ -452,27 +452,33 @@ spok.arrayElements = function arrayElements(n: number) {
  * @param {Number} max max number of elements
  */
 spok.arrayElementsRange = function arrayElementsRange(
-  min: number, max: number) {
+  min: number,
+  max: number
+) {
   function checkCount(array: []) {
     if (array == null) {
       console.error(
-        'Expected between %d and %d, but found array to be null.', min, max)
+        'Expected between %d and %d, but found array to be null.',
+        min,
+        max
+      )
       return false
     }
     const pass = spok.array(array) && array.length >= min && array.length <= max
     if (!pass) {
       console.error(
         'Expected between %d and %d, but found %d elements.',
-        min, max, array.length
+        min,
+        max,
+        array.length
       )
     }
     return pass
-
   }
 
   checkCount.$spec = 'spok.arrayElementsRange(' + min + ', ' + max + ')'
-  checkCount.$description = 'array has between'
-    + min + ' and ' + max + ' elements'
+  checkCount.$description =
+    'array has between' + min + ' and ' + max + ' elements'
   return checkCount
 }
 
@@ -556,8 +562,8 @@ spok.definedObject.$description = 'value is defined and of type object'
  */
 spok.startsWith = function startsWith(what: string) {
   function checkStartsWith(x: string) {
-    const res = x != null && typeof x.startsWith === 'function'
-      && x.startsWith(what)
+    const res =
+      x != null && typeof x.startsWith === 'function' && x.startsWith(what)
     if (!res) console.error('"%s" does not start with "%s"', x, what)
     return res
   }
@@ -583,8 +589,8 @@ spok.startsWith = function startsWith(what: string) {
  */
 spok.endsWith = function endsWith(what: string) {
   function checkEndsWith(x: string) {
-    const res = x != null && typeof x.endsWith === 'function'
-      && x.endsWith(what)
+    const res =
+      x != null && typeof x.endsWith === 'function' && x.endsWith(what)
     if (!res) console.error('"%s" does not start with "%s"', x, what)
     return res
   }

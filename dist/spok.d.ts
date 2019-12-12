@@ -1,4 +1,7 @@
-import { Test } from 'tape';
+declare type Assert = {
+    equal(actual: any, expected: any, msg?: string): void;
+    deepEqual(actual: any, expected: any, msg?: string): void;
+};
 interface Specifications extends Object {
     $topic?: string;
     $spec?: string;
@@ -8,7 +11,7 @@ interface Specification<T> extends Specifications {
     (val: T): boolean;
 }
 interface Spok {
-    (t: Test, obj: object, specifications: Specifications, prefix?: string | null): void;
+    (t: Assert, obj: object, specifications: Specifications, prefix?: string | null): void;
     printSpec: boolean;
     printDescription: boolean;
     sound: boolean;
