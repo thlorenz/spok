@@ -23,5 +23,6 @@ jobs:
         npm run lint
         npm run tsc
         npm run test-main
+        npm run tsd
       env:
         CI: true

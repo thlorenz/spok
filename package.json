@@ -3,9 +3,13 @@
   "version": "1.1.0",
   "description": "Checks a given object against a given set of specifications to keep you from writing boilerplate tests.",
   "main": "dist/spok.js",
-  "typings": "dist/spok.d.ts",
+  "types": "dist/spok.d.ts",
   "files": [
-    "dist"
+    "dist/spok.d.ts",
+    "dist/*.ts",
+    "dist/*.ts.map",
+    "dist/*.js",
+    "dist/*.js.map"
   ],
   "directories": {
     "dist": "./dist"
@@ -16,12 +20,13 @@
     "test-10": "nave use 10 npm run test-main",
     "test-12": "nave use 12 npm run test-main",
     "test-all": "npm run test-main && npm run test-8 && npm run test-10 && npm run test-12",
-    "test:unit": "if [ -e $TRAVIS ]; then npm run test-all; else npm run test-main; fi",
-    "test": "npm run lint && npm run test:unit",
-    "tsc": "rm -rf dist/* && tsc -b",
-    "tsc:watch": "rm -rf dist/* && tsc -b --watch",
+    "test": "npm run lint && npm run test-main && npm run tsd",
+    "tsc": "tsc -b",
+    "tsc:clean": "find ./dist -type f -not -name 'spok.test-d.ts' -delete && rm -rf ./dist/__tests__",
+    "tsc:watch": "tsc -b --watch",
     "lint": "prettier -c src/**/*.ts",
-    "lint:fix": "prettier --write src/**/*.ts"
+    "lint:fix": "prettier --write src/**/*.ts",
+    "tsd": "tsd"
   },
   "browser": {
     "./dist/inspect.js": "./dist/inspect-browser.js"
@@ -40,6 +45,7 @@
     "nave": "~2.2.3",
     "prettier": "^1.19.1",
     "tape": "~4.0.0",
+    "tsd": "^0.11.0",
     "typescript": "^3.5.3"
   },
   "keywords": [
