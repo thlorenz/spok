@@ -20,6 +20,8 @@ jobs:
     - name: npm install, lint and test
       run: |
         npm install
+        npm run lint
+        npm run tsc
         npm run test-main
       env:
         CI: true

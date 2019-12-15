@@ -11,7 +11,6 @@
     "dist": "./dist"
   },
   "scripts": {
-    "pretest-main": "npm run tsc",
     "test-main": "set -e; for t in ./dist/__tests__/*.js; do node $t; done",
     "test-8": "nave use 8 npm run test-main",
     "test-10": "nave use 10 npm run test-main",
@@ -20,11 +19,9 @@
     "test:unit": "if [ -e $TRAVIS ]; then npm run test-all; else npm run test-main; fi",
     "test": "npm run lint && npm run test:unit",
     "tsc": "rm -rf dist/* && tsc -b",
-    "tsc:watch": "rm -rf dist/* && tsc -p . --watch --declaration",
-    "tsl": "tslint -p . --force -t stylish",
-    "tsl:fix": "tslint -p . --force -t stylish --fix",
-    "tsfmt": "tsfmt --baseDir . -r",
-    "lint": "npm run tsc &&  npm run tsl"
+    "tsc:watch": "rm -rf dist/* && tsc -b --watch",
+    "lint": "prettier -c src/**/*.ts",
+    "lint:fix": "prettier --write src/**/*.ts"
   },
   "browser": {
     "./dist/inspect.js": "./dist/inspect-browser.js"
@@ -43,9 +40,7 @@
     "nave": "~2.2.3",
     "prettier": "^1.19.1",
     "tape": "~4.0.0",
-    "tslint": "^5.18.0",
-    "typescript": "^3.5.3",
-    "typescript-formatter": "^7.2.2"
+    "typescript": "^3.5.3"
   },
   "keywords": [
     "test",
