@@ -75,7 +75,7 @@ interface Spok {
 
   le(x: number): Specification<number>
 
-  ne(x: number): Specification<number>
+  ne(x: unknown): Specification<unknown>
 
   type(x: string): Specification<unknown>
 
@@ -304,8 +304,8 @@ spok.le = function le(n: number) {
  * @function
  * @param {Any} value criteria
  */
-spok.ne = function ne(value: number) {
-  function checkne(x: number) {
+spok.ne = function ne(value: unknown) {
+  function checkne(x: unknown) {
     return value !== x
   }
 

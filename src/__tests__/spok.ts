@@ -1,22 +1,17 @@
-'use strict'
+import test from 'tape'
+import spok from '../spok'
 
-const test = require('tape')
-const spok = require('../dist/spok').default
 spok.printSpec = false
 
-// eslint-disable-next-line no-unused-vars
-function inspect(obj, depth) {
-  console.error(require('util').inspect(obj, false, depth || 5, false))
-}
-var equalCalls
-var deepEqualCalls
+let equalCalls: { actual: any; expected: any; msg: string }[]
+let deepEqualCalls: { actual: any; expected: any; msg: string }[]
 
-var assert = {
-  equal: function(actual, expected, msg) {
-    equalCalls.push({ actual: actual, expected: expected, msg: msg })
+const assert = {
+  equal: (actual: any, expected: any, msg: string) => {
+    equalCalls.push({ actual, expected, msg })
   },
-  deepEqual: function(actual, expected, msg) {
-    deepEqualCalls.push({ actual: actual, expected: expected, msg: msg })
+  deepEqual: (actual: any, expected: any, msg: string) => {
+    deepEqualCalls.push({ actual, expected, msg })
   },
 }
 
@@ -26,9 +21,9 @@ function init() {
   deepEqualCalls = []
 }
 
-test('\nmultiple specifications all valid', function(t) {
+test('\nmultiple specifications all valid', (t) => {
   init()
-  var object = {
+  const object = {
     one: 1,
     two: 2,
     true: true,
@@ -43,7 +38,7 @@ test('\nmultiple specifications all valid', function(t) {
     anObject: {},
   }
 
-  var specs = {
+  const specs = {
     $topic: 'spok-test-valid',
     one: spok.ge(1),
     two: 2,
@@ -94,7 +89,7 @@ test('\nmultiple specifications all valid', function(t) {
 
 test('\nmultiple specifications some invalid', function(t) {
   init()
-  var object = {
+  const object = {
     true: true,
     hello: 'hello',
     object: { foo: 'bar' },
@@ -103,7 +98,7 @@ test('\nmultiple specifications some invalid', function(t) {
     anotherArray: [1, 2, 3],
   }
 
-  var specs = {
+  const specs = {
     $topic: 'spok-test-invalid',
     true: true,
     hello: 'hell',
@@ -146,18 +141,18 @@ test('\nmultiple specifications some invalid', function(t) {
 
 // shim startsWith for older node versions
 // consider doing this in spok proper?
-if (spok.startsWith !== 'function') {
-  spok.startsWith = function(s) {
-    var r = new RegExp('^' + s)
+if (typeof spok.startsWith !== 'function') {
+  spok.startsWith = (s) => {
+    const r = new RegExp('^' + s)
     return function match(x) {
       return r.test(x)
     }
   }
 }
 
-test('\nnested specifications all valid', function(t) {
+test('\nnested specifications all valid', (t) => {
   init()
-  var res = {
+  const res = {
     $topic: 'user function',
     file: '/Volumes/d/dev/js/async-hooks/ah-fs/test/read-one-file.js',
     line: 39,
@@ -165,6 +160,7 @@ test('\nnested specifications all valid', function(t) {
     inferredName: '',
     name: 'onread',
     location:
+      // tslint:disable-next-line:max-line-length
       'onread (/Volumes/d/dev/js/async-hooks/ah-fs/test/read-one-file.js:39:17)',
     propertyPaths: [
       'open.resource.context.callback',
@@ -288,16 +284,16 @@ test('\nnested specifications all valid', function(t) {
   t.end()
 })
 
-test('\nnested specifications in array', function(t) {
+test('\nnested specifications in array', (t) => {
   init()
-  var object = {
+  const object = {
     objArray: [{ foo: 'bar' }, { bar: 'foo' }],
     numberArray: [1, 2],
     stringArray: ['h', 'e'],
     numberStringArray: [1, 2, 'h', 'e'],
   }
 
-  var specs = {
+  const specs = {
     $topic: 'spok-test-nested-specs-in-array',
     objArray: [{ foo: spok.string }, { bar: 'foo' }],
     numberArray: [1, 2],
