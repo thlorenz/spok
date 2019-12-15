@@ -1,5 +1,6 @@
 import test from 'tape'
 import spok from '../spok'
+import { Specifications } from '../types'
 
 spok.printSpec = false
 
@@ -290,10 +291,14 @@ test('\nnested specifications in array', (t) => {
     objArray: [{ foo: 'bar' }, { bar: 'foo' }],
     numberArray: [1, 2],
     stringArray: ['h', 'e'],
-    numberStringArray: [1, 2, 'h', 'e'],
+    // This mixed array is readonly (as const) to make type assertions for
+    // work. Namely `spok.startsWith` cannot be used otherwise
+    // as non-const expects it to take `number | string` whereas it only
+    // takes a `string`.
+    numberStringArray: [1, 2, 'h', 'e'] as const,
   }
 
-  const specs = {
+  const specs: Specifications<typeof object> = {
     $topic: 'spok-test-nested-specs-in-array',
     objArray: [{ foo: spok.string }, { bar: 'foo' }],
     numberArray: [1, 2],

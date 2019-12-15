@@ -115,7 +115,9 @@ test('\nspecifications in isolation', (t) => {
   t.ok(!spok.string(undefined), 'not string undefined')
 
   t.ok(spok.array([]), 'array []')
+  // @ts-ignore no array
   t.ok(!spok.array({}), 'not array {}')
+  // @ts-ignore no array
   t.ok(!spok.array(undefined), 'not array undefined')
 
   t.ok(spok.arrayElements(0)([]), 'arrayElements [] is 0')
