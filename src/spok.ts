@@ -57,13 +57,13 @@ interface Spok {
   gez: Specification<number>
   ltz: Specification<number>
   lez: Specification<number>
-  array: Specification<[]>
-  number: Specification<any>
-  string: Specification<any>
-  function: Specification<any>
-  definedObject: Specification<object | null>
-  defined: Specification<object | null>
-  notDefined: Specification<object | null>
+  array: Specification<unknown>
+  number: Specification<unknown>
+  string: Specification<unknown>
+  function: Specification<unknown>
+  definedObject: Specification<unknown>
+  defined: Specification<unknown>
+  notDefined: Specification<unknown>
 
   range(min: number, max: number): Specification<number>
 
@@ -77,11 +77,11 @@ interface Spok {
 
   ne(x: number): Specification<number>
 
-  type(x: string): Specification<any>
+  type(x: string): Specification<unknown>
 
-  arrayElements(n: number): Specification<[]>
+  arrayElements(n: number): Specification<unknown[]>
 
-  arrayElementsRange(min: number, max: number): Specification<[]>
+  arrayElementsRange(min: number, max: number): Specification<unknown[]>
 
   startsWith(what: string): Specification<string>
 
@@ -421,7 +421,7 @@ spok.array.$description = 'values ia an Array'
  * @param {Number} n number of elements
  */
 spok.arrayElements = function arrayElements(n: number) {
-  function checkCount(array: []) {
+  function checkCount(array: unknown[]) {
     if (array == null) {
       console.error('Expected %d, but found array to be null.', n)
       return false
@@ -455,7 +455,7 @@ spok.arrayElementsRange = function arrayElementsRange(
   min: number,
   max: number
 ) {
-  function checkCount(array: []) {
+  function checkCount(array: unknown[]) {
     if (array == null) {
       console.error(
         'Expected between %d and %d, but found array to be null.',

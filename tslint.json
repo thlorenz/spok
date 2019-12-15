@@ -6,7 +6,7 @@
     "jsRules": {},
     "rules": {
       "align": [true, "elements", "members", "statements" ],
-      "arrow-parens": [true, "ban-single-arg-parens"],
+      "arrow-parens": [true],
       "curly": [true, "ignore-same-line"],
       "eofline": false,
       "interface-name" : [false],
@@ -18,7 +18,7 @@
       "no-empty": [true, "allow-empty-functions"],
       "object-literal-key-quotes": [false],
       "object-literal-sort-keys": [false],
-      "quotemark": [true, "single", "jsx-double"],
+      "quotemark": [false], // prettier takes care of that
       "radix": false,
       "semicolon": [true, "never"],
       "variable-name": [true, "check-format", "allow-leading-underscore"],
