@@ -1,26 +1,9 @@
 import test from 'tape'
 import spok from '../spok'
 import { Specifications } from '../types'
+import { assert, deepEqualCalls, equalCalls, init } from './utils'
 
 spok.printSpec = false
-
-let equalCalls: { actual: any; expected: any; msg: string }[]
-let deepEqualCalls: { actual: any; expected: any; msg: string }[]
-
-const assert = {
-  equal: (actual: any, expected: any, msg: string) => {
-    equalCalls.push({ actual, expected, msg })
-  },
-  deepEqual: (actual: any, expected: any, msg: string) => {
-    deepEqualCalls.push({ actual, expected, msg })
-  },
-}
-
-function init() {
-  spok.color = false
-  equalCalls = []
-  deepEqualCalls = []
-}
 
 test('\nmultiple specifications all valid', (t) => {
   init()

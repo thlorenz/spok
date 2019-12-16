@@ -1,13 +1,8 @@
 import colors from 'ansicolors'
 import insp from './inspect'
-import {
-  Assert,
-  Specifications,
-  Spok,
-  SpokConfig,
-  SpokFunction,
-} from './types'
 import spokAssertions from './spok-assertions'
+import { Assert, Specifications, Spok, SpokConfig, SpokFunction } from './types'
+
 export * from './types'
 
 // only recurse into arrays if they contain actual specs or objects
@@ -62,6 +57,18 @@ const spokFunction: SpokFunction = <P>(
 
     // @ts-ignore
     const spec = specifications[k]
+    if (obj == null) {
+      let summary = `property "${k}" checked on null or undefined`
+      let description =
+        ', this is most likely due to an array in' +
+        ' the specs that has more items than the actual array'
+      if (spok.color) {
+        summary = colors.red(summary)
+        description = colors.brightBlack(description)
+      }
+
+      return t.equal(spec, obj, `${summary}${description}`)
+    }
     // @ts-ignore
     const val = obj[k]
 
