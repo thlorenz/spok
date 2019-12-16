@@ -295,8 +295,8 @@ test('\nnested specifications in array', (t) => {
     // work. Namely `spok.startsWith` cannot be used otherwise
     // as non-const expects it to take `number | string` whereas it only
     // takes a `string`.
-    numberStringArray: [1, 2, 'h', 'e'] as const,
-  }
+    numberStringArray: [1, 2, 'h', 'e'],
+  } as const
 
   const specs: Specifications<typeof object> = {
     $topic: 'spok-test-nested-specs-in-array',
