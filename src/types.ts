@@ -31,10 +31,10 @@ export type Specification<T> = Annotations & {
   (val: T): boolean
 }
 
-export type SpokFunction = <P>(
+export type SpokFunction = <T, P extends object = Specifications<T>>(
   t: Assert,
-  obj: P,
-  specifications: Specifications<P>,
+  obj: T,
+  specifications: P,
   prefix?: string | null
 ) => void
 
