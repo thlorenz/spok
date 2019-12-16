@@ -68,21 +68,6 @@
     "url": "https://github.com/thlorenz/spok/blob/master/LICENSE"
   },
   "engine": {
-    "node": ">=10"
-  },
-  "testling": {
-    "files": "test/*.js",
-    "browsers": [
-      "ie/8..latest",
-      "firefox/17..latest",
-      "firefox/nightly",
-      "chrome/22..latest",
-      "chrome/canary",
-      "opera/12..latest",
-      "opera/next",
-      "safari/5.1..latest",
-      "ipad/6.0..latest",
-      "iphone/6.0..latest"
-    ]
+    "node": ">=8"
   }
 }

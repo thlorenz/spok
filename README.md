@@ -1,7 +1,5 @@
 # spok [![](https://github.com/thlorenz/spok/workflows/Node%20CI/badge.svg?branch=master)](https://github.com/thlorenz/spok/actions)
 
-[![testling badge](https://ci.testling.com/thlorenz/spok.png)](https://ci.testling.com/thlorenz/spok)
-
 Checks a given object against a given set of specifications to keep you from writing boilerplate tests.
 
 ```js
