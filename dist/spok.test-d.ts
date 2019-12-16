@@ -287,3 +287,22 @@ import spok, { Specifications } from './spok'
     },
   })
 }
+
+//
+// Types with optional properties
+//
+{
+  type ColumnInfo = {
+    column?: number
+  }
+
+  const actual: ColumnInfo = {
+    column: 2,
+  }
+
+  type S = Specifications<typeof actual>
+
+  expectAssignable<S>({
+    column: spok.ge(1)
+  })
+}

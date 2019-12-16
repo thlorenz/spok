@@ -3,14 +3,14 @@ export type MatchingSpecs<P> = Partial<
     [K in keyof P]: P[K] extends unknown[]
       ?
           | Specification<P[K][number][]>
-          | Readonly<(
+          | Readonly<
               | P[K][number]
               | Specification<P[K][number]>
               | MatchingSpecs<P[K][number]>
-            )>[]
+            >[]
       : P[K] extends object
       ? MatchingSpecs<P[K]>
-      : P[K] | Specification<P[K]>
+      : P[K] | Specification<P[K]> | Specification<NonNullable<P[K]>>
   }
 >
 
