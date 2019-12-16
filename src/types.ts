@@ -31,7 +31,14 @@ export type Specification<T> = Annotations & {
   (val: T): boolean
 }
 
-export type SpokFunction = <T, P extends object = Specifications<T>>(
+export type SpokFunction = <T>(
+  t: Assert,
+  obj: T,
+  specifications: Specifications<T>,
+  prefix?: string | null
+) => void
+
+export type SpokFunctionAny = <P extends object, T>(
   t: Assert,
   obj: T,
   specifications: P,
@@ -83,4 +90,4 @@ export type SpokAssertions = {
   test(regex: RegExp): Specification<string>
 }
 
-export type Spok = SpokFunction & SpokAssertions & SpokConfig
+export type Spok = SpokFunction & SpokAssertions & SpokConfig & { any: SpokFunctionAny }

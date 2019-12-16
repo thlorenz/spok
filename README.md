@@ -73,6 +73,7 @@ Specs and descriptions are printed in gray so you can focus on the actual values
 
 -   [API](#api)
     -   [spok](#spok)
+    -   [spok.any](#spok.any)
     -   [spok.range](#spokrange)
     -   [spok.gt](#spokgt)
     -   [spok.ge](#spokge)
@@ -124,6 +125,14 @@ each provided specification is validated and a test failure caused if one of the
     **tap**, **tape**, **assert** or any other library that has those and thus is compatible
 -   `obj` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the object to verify the specifications against
 -   `specifications` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the specifications to verify
+
+### spok.any
+
+Version of `spok` that is less strict about the relation of the
+specification type, namely it allows overriding the type manually or
+derives it from the supplied parameter.
+
+Use ONLY when you cannot adjust the types, so plain `spok` works.
 
 ### spok.range
 

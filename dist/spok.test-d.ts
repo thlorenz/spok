@@ -1,4 +1,5 @@
-import { expectAssignable, expectNotAssignable } from 'tsd'
+import { expectAssignable, expectError, expectNotAssignable } from 'tsd'
+import { assert } from '../src/__tests__/utils'
 import spok, { Specifications } from './spok'
 
 //
@@ -303,6 +304,15 @@ import spok, { Specifications } from './spok'
   type S = Specifications<typeof actual>
 
   expectAssignable<S>({
-    column: spok.ge(1)
+    column: spok.ge(1),
   })
+}
+
+//
+// Overriding spec type
+//
+{
+  const actual = { foo: 1 }
+  expectError(() => spok(assert, actual, { foo: '1' }))
+  spok.any(assert, actual, { foo: '1' })
 }

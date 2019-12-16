@@ -1,7 +1,14 @@
 import colors from 'ansicolors'
 import insp from './inspect'
 import spokAssertions from './spok-assertions'
-import { Assert, Specifications, Spok, SpokConfig, SpokFunction } from './types'
+import {
+  Assert,
+  Specifications,
+  Spok,
+  SpokConfig,
+  SpokFunction,
+  SpokFunctionAny,
+} from './types'
 
 export * from './types'
 
@@ -46,10 +53,10 @@ function needRecurse(
  * @param {Specifications} specifications the specifications to verify
  * @param {String } prefix added to messages
  */
-const spokFunction: SpokFunction = <P>(
+const spokFunction: SpokFunction = <T>(
   t: Assert,
-  obj: P,
-  specifications: Specifications<P>,
+  obj: T,
+  specifications: Specifications<T>,
   prefix: string | null = ''
 ) => {
   function check(k: string) {
@@ -126,6 +133,23 @@ const spokFunction: SpokFunction = <P>(
   }
 }
 
+/**
+ * Version of `spok` that is less strict about the relation of the
+ * specification type, namely it allows overriding the type manually or
+ * derives it from the supplied parameter.
+ *
+ * Use ONLY when you cannot adjust the types, so plain `spok` works.
+ *
+ */
+const spokFunctionAny: SpokFunctionAny = <P extends object, T>(
+  t: Assert,
+  obj: T,
+  specifications: P,
+  prefix: string | null = ''
+) => {
+  return spokFunction(t, obj, specifications, prefix)
+}
+
 const spokConfig: SpokConfig = {
   printSpec: true,
   printDescription: false,
@@ -133,6 +157,11 @@ const spokConfig: SpokConfig = {
   color: true,
 }
 
-const spok: Spok = Object.assign(spokFunction, spokAssertions, spokConfig)
+const spok: Spok = Object.assign(
+  spokFunction,
+  { any: spokFunctionAny },
+  spokAssertions,
+  spokConfig
+)
 
 export default spok
