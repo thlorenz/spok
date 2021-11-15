@@ -243,6 +243,7 @@ test('\nnested specifications all valid', (t) => {
     'spok executes the correct equal calls'
   )
   // Mitigating inconsistencies between Node.js versions
+  // @ts-ignore
   delete deepEqualCalls[0].msg
 
   t.deepEqual(
