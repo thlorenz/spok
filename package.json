@@ -1,6 +1,6 @@
 {
   "name": "spok",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "Checks a given object against a given set of specifications to keep you from writing boilerplate tests.",
   "main": "dist/spok.js",
   "types": "dist/spok.d.ts",
