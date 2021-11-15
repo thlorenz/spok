@@ -49,6 +49,44 @@ test('my object meets the specifications', function(t) {
 
     npm install spok
 
+## Cypress/Chai Expect Support
+
+Spok can be used out of the box with `expect`, for instance when running tests with
+[cypress.io](https://cypress.io).
+
+Simply create a custom assert function and pass it to spok. The main difference to running
+tests with `tape` is that if a single property in the compared object doesn't match the test
+fails immediately.
+
+```js
+import spok from 'spok'
+const t = spok.adapters.chaiExpect(expect)
+```
+
+```js
+spok(t, meta, {
+  err: null,
+  fee: 5000,
+  status: {
+    Ok: null,
+  },
+})
+```
+
+![cypress-passing](./assets/cypress-passing.png)
+
+```js
+spok(t, meta, {
+  err: null,
+  fee: 4000,
+  status: {
+    Ok: null,
+  },
+})
+```
+
+![cypress-failing](./assets/cypress-failing.png)
+
 ## Why not just `deepEqual`?
 
 `deepEqual` works great for most cases, but in some cases you need more control, i.e.
