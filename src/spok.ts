@@ -11,6 +11,7 @@ import {
 } from './types'
 
 export * from './types'
+import { chaiExpect } from './adapter-chai-expect'
 
 // only recurse into arrays if they contain actual specs or objects
 function needRecurseArray(arr: Array<number | string | null>): boolean {
@@ -161,7 +162,8 @@ const spok: Spok = Object.assign(
   spokFunction,
   { any: spokFunctionAny },
   spokAssertions,
-  spokConfig
+  spokConfig,
+  { adapters: { chaiExpect } }
 )
 
 export default spok
