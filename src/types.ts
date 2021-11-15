@@ -1,3 +1,5 @@
+import { ExpectFn } from './adapter-chai-expect'
+
 export type MatchingSpecs<P> = Partial<
   {
     [K in keyof P]: P[K] extends unknown[]
@@ -90,4 +92,9 @@ export type SpokAssertions = {
   test(regex: RegExp): Specification<string>
 }
 
-export type Spok = SpokFunction & SpokAssertions & SpokConfig & { any: SpokFunctionAny }
+export type Spok = SpokFunction &
+  SpokAssertions &
+  SpokConfig & {
+    any: SpokFunctionAny
+    adapters: { chaiExpect: (expectFn: ExpectFn<any>) => Assert }
+  }
