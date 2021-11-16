@@ -38,7 +38,8 @@
   },
   "homepage": "https://github.com/thlorenz/spok",
   "dependencies": {
-    "ansicolors": "~0.3.2"
+    "ansicolors": "~0.3.2",
+    "strip-ansi": "^7.0.1"
   },
   "devDependencies": {
     "@types/ansicolors": "0.0.31",
