@@ -1,6 +1,4 @@
 import spok, { Assert } from './spok'
-import stripAnsi from 'strip-ansi'
-
 declare var window: any
 declare var expect: ExpectFn<any>
 
@@ -19,7 +17,7 @@ export function chaiExpect(expectFn: ExpectFn<any> = expect) {
   if (typeof window !== 'undefined') {
     spok.color = false
     spok.printDescription = false
-    strip = stripAnsi
+    strip = require('strip-ansi')
   }
   const adapter: Assert = {
     equal: (a, b, desc) => expectFn(a, strip(desc ?? '')).equal(b),
