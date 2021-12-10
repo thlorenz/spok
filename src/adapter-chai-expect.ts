@@ -17,7 +17,7 @@ export function chaiExpect(expectFn: ExpectFn<any> = expect) {
   if (typeof window !== 'undefined') {
     spok.color = false
     spok.printDescription = false
-    strip = require('strip-ansi')
+    strip = require('./strip-ansi')
   }
   const adapter: Assert = {
     equal: (a, b, desc) => expectFn(a, strip(desc ?? '')).equal(b),
