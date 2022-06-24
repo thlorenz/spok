@@ -4,7 +4,7 @@ Checks a given object against a given set of specifications to keep you from wri
 
 ```js
 var test = require('tape')
-var spok = require('spok')
+var spok = require('spok').default
 
 // this would be returned from a function you are testing
 var object = {
