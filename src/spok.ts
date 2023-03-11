@@ -11,9 +11,22 @@ import {
   SpokFunctionAny,
 } from './types'
 import { isTestContext, TestContext } from './types-internal'
+import { isRunningAsTestChildProcess } from './utils'
 
 export * from './types'
 import { chaiExpect } from './adapter-chai-expect'
+
+// When we're running as part of node --test we need to disable colors even if
+// the user them to be on as otherwise TAP output becomes invalid.
+// NOTE: we start not printing colors in order to avoid screwing up the output
+// until we're sure.
+// We hope that this resolves before too many colorless diagnostics were printed.
+let disableColor = true
+;(function() {
+  isRunningAsTestChildProcess().then((x) => {
+    disableColor = x
+  })
+})()
 
 // only recurse into arrays if they contain actual specs or objects
 function needRecurseArray(arr: Array<number | string | null>): boolean {
@@ -64,6 +77,7 @@ const spokFunction: SpokFunction = <T>(
 ) => {
   const isCtx = isTestContext(t)
   const _assert = isCtx ? assert : t
+  const color = spok.color && !disableColor
 
   function check(k: string) {
     if (k === '$topic' || k === '$spec' || k === '$description') return
@@ -75,7 +89,7 @@ const spokFunction: SpokFunction = <T>(
       let description =
         ', this is most likely due to an array in' +
         ' the specs that has more items than the actual array'
-      if (spok.color) {
+      if (color) {
         summary = colors.red(summary)
         description = colors.brightBlack(description)
       }
@@ -87,15 +101,22 @@ const spokFunction: SpokFunction = <T>(
     // @ts-ignore
     const val = obj[k]
 
-    let msg = prefix + k + ' = ' + insp(val, spok.color)
+    let msg = prefix + k + ' = ' + insp(val, color)
     if (spec != null) {
       if (spec.$spec == null && spec.name != null && spec.name.length > 0) {
         spec.$spec = spec.name
       }
       const ps = spok.printSpec && spec.$spec != null
       const pd = spok.printDescription && spec.$description != null
-      if (ps) msg += '  ' + colors.brightBlack('satisfies: ' + spec.$spec)
-      if (pd) msg += '  ' + colors.brightBlack(spec.$description)
+      if (ps) {
+        const extra = '  ' + 'satisfies: ' + spec.$spec
+        msg += color ? colors.brightBlack(extra) : extra
+      }
+      if (pd) {
+        msg += color
+          ? '  ' + colors.brightBlack(spec.$description)
+          : '  ' + spec.$description
+      }
     }
 
     switch (typeof spec) {
@@ -171,11 +192,12 @@ const spokFunctionAny: SpokFunctionAny = <P extends object, T>(
   return spokFunction(t, obj, specifications, prefix)
 }
 
+const noColorEnvVar = process?.env?.NO_COLOR
 const spokConfig: SpokConfig = {
   printSpec: true,
   printDescription: false,
   sound: false,
-  color: true,
+  color: noColorEnvVar != '1' && noColorEnvVar != 'true',
 }
 
 const spok: Spok = Object.assign(
