@@ -62,6 +62,17 @@ Spok support this out of the box as follows:
 
 See [./example/node-test.js](./example/node-test.js) and [./example/node-test-nested.js](./example/node-test-nested.js)for a full examples.
 
+### Colors 
+
+_spok_ detects if colors should be used in the output in order to avoid breaking TAP
+compatibility when needed as follows:
+
+- if `FORCE_COLOR` env var is set to `1|true` colors are ALWAYS
+- if `NO_COLOR` env var is set to `1|true` colors are NEVER used
+- if tests are executed via `node --test mytest.js` and `FORCE_COLOR` is not set then colorse are disabled
+- if tests are executed via `node mytest.js` and `NO_COLOR` is not set then colors are enabled
+
+
 ## Tap/Tape
 
 - tap and tape provide a `t` which mirrors the `assert` module and also prints results and the
