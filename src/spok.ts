@@ -168,7 +168,7 @@ const spokFunction: SpokFunction = <T>(
     } else {
       _assert.equal(1, 1, msg)
     }
-    prefix = prefix + '·· '
+    prefix = (prefix ?? '') + (color ? '·· ' : '.. ')
   }
 
   // check all specs

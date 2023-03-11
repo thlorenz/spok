@@ -42,16 +42,16 @@ test('\nmultiple specifications all valid', (t) => {
     equalCalls,
     [
       { actual: 1, expected: 1, msg: 'spok: spok-test-valid' },
-      { actual: true, expected: true, msg: '·· one = 1' },
-      { actual: 2, expected: 2, msg: '·· two = 2' },
-      { actual: true, expected: true, msg: '·· true = true' },
-      { actual: 'hello', expected: 'hello', msg: "·· hello = 'hello'" },
-      { actual: 1, expected: 1, msg: '·· spok: spok-test-valid.object' },
-      { actual: 'bar', expected: 'bar', msg: "·· ·· foo = 'bar'" },
-      { actual: true, expected: true, msg: '·· three = 3' },
-      { actual: true, expected: true, msg: '·· four = 4' },
-      { actual: true, expected: true, msg: '·· anArray = [ 1, 2 ]' },
-      { actual: true, expected: true, msg: '·· anObject = {}' },
+      { actual: true, expected: true, msg: '.. one = 1' },
+      { actual: 2, expected: 2, msg: '.. two = 2' },
+      { actual: true, expected: true, msg: '.. true = true' },
+      { actual: 'hello', expected: 'hello', msg: ".. hello = 'hello'" },
+      { actual: 1, expected: 1, msg: '.. spok: spok-test-valid.object' },
+      { actual: 'bar', expected: 'bar', msg: ".. .. foo = 'bar'" },
+      { actual: true, expected: true, msg: '.. three = 3' },
+      { actual: true, expected: true, msg: '.. four = 4' },
+      { actual: true, expected: true, msg: '.. anArray = [ 1, 2 ]' },
+      { actual: true, expected: true, msg: '.. anObject = {}' },
     ],
     'spok performs the expected equality checks'
   )
@@ -62,7 +62,7 @@ test('\nmultiple specifications all valid', (t) => {
       {
         actual: [1, 2, 3],
         expected: [1, 2, 3],
-        msg: '·· anotherArray = [ 1, 2, 3 ]',
+        msg: '.. anotherArray = [ 1, 2, 3 ]',
       },
     ],
     'spok performs the expected deep equality checks'
@@ -98,12 +98,12 @@ test('\nmultiple specifications some invalid', function(t) {
     equalCalls,
     [
       { actual: 1, expected: 1, msg: 'spok: spok-test-invalid' },
-      { actual: true, expected: true, msg: '·· true = true' },
-      { actual: 'hello', expected: 'hell', msg: "·· hello = 'hello'" },
-      { actual: 1, expected: 1, msg: '·· spok: spok-test-invalid.object' },
-      { actual: 'bar', expected: 'bas', msg: "·· ·· foo = 'bar'" },
-      { actual: false, expected: true, msg: '·· four = 4' },
-      { actual: true, expected: true, msg: '·· anArray = [ 1, 2 ]' },
+      { actual: true, expected: true, msg: '.. true = true' },
+      { actual: 'hello', expected: 'hell', msg: ".. hello = 'hello'" },
+      { actual: 1, expected: 1, msg: '.. spok: spok-test-invalid.object' },
+      { actual: 'bar', expected: 'bas', msg: ".. .. foo = 'bar'" },
+      { actual: false, expected: true, msg: '.. four = 4' },
+      { actual: true, expected: true, msg: '.. anArray = [ 1, 2 ]' },
     ],
     'spok performs the expected equality checks'
   )
@@ -114,7 +114,7 @@ test('\nmultiple specifications some invalid', function(t) {
       {
         actual: [1, 2, 3],
         expected: [1, 2, 3, 4],
-        msg: '·· anotherArray = [ 1, 2, 3 ]',
+        msg: '.. anotherArray = [ 1, 2, 3 ]',
       },
     ],
     'spok performs the expected deep equality checks'
@@ -201,44 +201,44 @@ test('\nnested specifications all valid', (t) => {
         actual: true,
         expected: true,
         msg:
-          "·· file = '/Volumes/d/dev/js/async-hooks/ah-fs/test/read-one-file.js'",
+          ".. file = '/Volumes/d/dev/js/async-hooks/ah-fs/test/read-one-file.js'",
       },
-      { actual: 39, expected: 39, msg: '·· line = 39' },
-      { actual: 17, expected: 17, msg: '·· column = 17' },
-      { actual: '', expected: '', msg: "·· inferredName = ''" },
-      { actual: 'onread', expected: 'onread', msg: "·· name = 'onread'" },
+      { actual: 39, expected: 39, msg: '.. line = 39' },
+      { actual: 17, expected: 17, msg: '.. column = 17' },
+      { actual: '', expected: '', msg: ".. inferredName = ''" },
+      { actual: 'onread', expected: 'onread', msg: ".. name = 'onread'" },
       {
         actual: true,
         expected: true,
         msg:
-          "·· location = 'onread (/Volumes/d/dev/js/async-hooks/ah-fs/test/read-one-file.js:39:17)'",
+          ".. location = 'onread (/Volumes/d/dev/js/async-hooks/ah-fs/test/read-one-file.js:39:17)'",
       },
-      { actual: 1, expected: 1, msg: '·· spok: spok-nested-all-valid.args' },
-      { actual: null, expected: null, msg: '·· ·· 0 = null' },
+      { actual: 1, expected: 1, msg: '.. spok: spok-nested-all-valid.args' },
+      { actual: null, expected: null, msg: '.. .. 0 = null' },
       {
         actual: 1,
         expected: 1,
-        msg: '·· ·· spok: spok-nested-all-valid.args.1',
+        msg: '.. .. spok: spok-nested-all-valid.args.1',
       },
-      { actual: 'Buffer', expected: 'Buffer', msg: "·· ·· ·· type = 'Buffer'" },
-      { actual: true, expected: true, msg: '·· ·· ·· len = 6108' },
-      { actual: true, expected: true, msg: '·· ·· ·· included = 18' },
+      { actual: 'Buffer', expected: 'Buffer', msg: ".. .. .. type = 'Buffer'" },
+      { actual: true, expected: true, msg: '.. .. .. len = 6108' },
+      { actual: true, expected: true, msg: '.. .. .. included = 18' },
       {
         actual: 1,
         expected: 1,
-        msg: '·· ·· ·· spok: spok-nested-all-valid.args.1.val',
+        msg: '.. .. .. spok: spok-nested-all-valid.args.1.val',
       },
       {
         actual: true,
         expected: true,
-        msg: "·· ·· ·· ·· utf8 = 'const test = requi'",
+        msg: ".. .. .. .. utf8 = 'const test = requi'",
       },
       {
         actual: '636f6e73742074657374203d207265717569',
         expected: '636f6e73742074657374203d207265717569',
-        msg: "·· ·· ·· ·· hex = '636f6e73742074657374203d207265717569'",
+        msg: ".. .. .. .. hex = '636f6e73742074657374203d207265717569'",
       },
-      { actual: 'Object', expected: 'Object', msg: "·· ·· proto = 'Object'" },
+      { actual: 'Object', expected: 'Object', msg: ".. .. proto = 'Object'" },
     ],
     'spok executes the correct equal calls'
   )
@@ -299,29 +299,29 @@ test('\nnested specifications in array', (t) => {
       {
         actual: 1,
         expected: 1,
-        msg: '·· spok: spok-test-nested-specs-in-array.objArray',
+        msg: '.. spok: spok-test-nested-specs-in-array.objArray',
       },
       {
         actual: 1,
         expected: 1,
-        msg: '·· ·· spok: spok-test-nested-specs-in-array.objArray.0',
+        msg: '.. .. spok: spok-test-nested-specs-in-array.objArray.0',
       },
-      { actual: true, expected: true, msg: "·· ·· ·· foo = 'bar'" },
+      { actual: true, expected: true, msg: ".. .. .. foo = 'bar'" },
       {
         actual: 1,
         expected: 1,
-        msg: '·· ·· spok: spok-test-nested-specs-in-array.objArray.1',
+        msg: '.. .. spok: spok-test-nested-specs-in-array.objArray.1',
       },
-      { actual: 'foo', expected: 'foo', msg: "·· ·· ·· bar = 'foo'" },
+      { actual: 'foo', expected: 'foo', msg: ".. .. .. bar = 'foo'" },
       {
         actual: 1,
         expected: 1,
-        msg: '·· spok: spok-test-nested-specs-in-array.numberStringArray',
+        msg: '.. spok: spok-test-nested-specs-in-array.numberStringArray',
       },
-      { actual: true, expected: true, msg: '·· ·· 0 = 1' },
-      { actual: 2, expected: 2, msg: '·· ·· 1 = 2' },
-      { actual: true, expected: true, msg: "·· ·· 2 = 'h'" },
-      { actual: 'e', expected: 'e', msg: "·· ·· 3 = 'e'" },
+      { actual: true, expected: true, msg: '.. .. 0 = 1' },
+      { actual: 2, expected: 2, msg: '.. .. 1 = 2' },
+      { actual: true, expected: true, msg: ".. .. 2 = 'h'" },
+      { actual: 'e', expected: 'e', msg: ".. .. 3 = 'e'" },
     ],
     'spok executes correct equal calls'
   )
@@ -329,11 +329,11 @@ test('\nnested specifications in array', (t) => {
   t.deepEqual(
     deepEqualCalls,
     [
-      { actual: [1, 2], expected: [1, 2], msg: '·· numberArray = [ 1, 2 ]' },
+      { actual: [1, 2], expected: [1, 2], msg: '.. numberArray = [ 1, 2 ]' },
       {
         actual: ['h', 'e'],
         expected: ['h', 'e'],
-        msg: "·· stringArray = [ 'h', 'e' ]",
+        msg: ".. stringArray = [ 'h', 'e' ]",
       },
     ],
     'spok executes correct deep equal calls'

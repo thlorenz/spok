@@ -29,8 +29,8 @@ test('\nproviding object key that does not exist on object inside array', (t) =>
     equalCalls,
     [
       { actual: 1, expected: 1, msg: 'spok: 0' },
-      { actual: 1, expected: 1, msg: '·· foo = 1' },
-      { actual: undefined, expected: 2, msg: '·· bar = undefined' },
+      { actual: 1, expected: 1, msg: '.. foo = 1' },
+      { actual: undefined, expected: 2, msg: '.. bar = undefined' },
     ],
     'spok detects that object inside array does not have that property'
   )
@@ -46,7 +46,7 @@ test('\nproviding more array elements in spec than in object', (t) => {
 
     [
       { actual: 1, expected: 1, msg: 'spok: 0' },
-      { actual: 1, expected: 1, msg: '·· foo = 1' },
+      { actual: 1, expected: 1, msg: '.. foo = 1' },
       { actual: 1, expected: 1, msg: 'spok: 1' },
       {
         actual: 2,
