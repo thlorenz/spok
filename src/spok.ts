@@ -1,4 +1,5 @@
 import colors from 'ansicolors'
+import { strict as assert } from 'assert'
 import insp from './inspect'
 import spokAssertions from './spok-assertions'
 import {
@@ -9,6 +10,7 @@ import {
   SpokFunction,
   SpokFunctionAny,
 } from './types'
+import { isTestContext, TestContext } from './types-internal'
 
 export * from './types'
 import { chaiExpect } from './adapter-chai-expect'
@@ -55,11 +57,14 @@ function needRecurse(
  * @param {String } prefix added to messages
  */
 const spokFunction: SpokFunction = <T>(
-  t: Assert,
+  t: Assert | TestContext,
   obj: T,
   specifications: Specifications<T>,
   prefix: string | null = ''
 ) => {
+  const isCtx = isTestContext(t)
+  const _assert = isCtx ? assert : t
+
   function check(k: string) {
     if (k === '$topic' || k === '$spec' || k === '$description') return
 
@@ -74,8 +79,10 @@ const spokFunction: SpokFunction = <T>(
         summary = colors.red(summary)
         description = colors.brightBlack(description)
       }
+      const msg = `${summary}${description}`
 
-      return t.equal(spec, obj, `${summary}${description}`)
+      if (isCtx) t.diagnostic(msg)
+      return _assert.equal(spec, obj, msg)
     }
     // @ts-ignore
     const val = obj[k]
@@ -93,14 +100,22 @@ const spokFunction: SpokFunction = <T>(
 
     switch (typeof spec) {
       case 'function':
-        return t.equal(!!spec!(val), true, msg)
+        if (isCtx) t.diagnostic(msg)
+        return _assert.equal(!!spec!(val), true, msg)
       case 'boolean':
       case 'number':
       case 'string':
-        return t.equal(val, spec, msg)
+        if (isCtx) t.diagnostic(msg)
+        return _assert.equal(val, spec, msg)
       case 'object':
-        if (spec == null) return t.equal(val, spec, msg)
-        if (!needRecurse(spec)) return t.deepEqual(val, spec, msg)
+        if (spec == null) {
+          if (isCtx) t.diagnostic(msg)
+          return _assert.equal(val, spec, msg)
+        }
+        if (!needRecurse(spec)) {
+          if (isCtx) t.diagnostic(msg)
+          return _assert.deepEqual(val, spec, msg)
+        }
 
         if (spec.$topic == null) {
           const rootTopic =
@@ -121,7 +136,12 @@ const spokFunction: SpokFunction = <T>(
 
   if (specifications.$topic != null) {
     // print indicator that a specific spec started being evaluated
-    t.equal(1, 1, prefix + 'spok: ' + specifications.$topic)
+    const msg = prefix + 'spok: ' + specifications.$topic
+    if (isCtx) {
+      t.diagnostic(msg)
+    } else {
+      _assert.equal(1, 1, msg)
+    }
     prefix = prefix + '·· '
   }
 
