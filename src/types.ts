@@ -1,7 +1,7 @@
 import { ExpectFn } from './adapter-chai-expect'
 import { Assert, TestContext } from './types-internal'
 
-export { Assert } from './types-internal'
+export { Assert, TestContext } from './types-internal'
 
 export type MatchingSpecs<P> = Partial<
   {
