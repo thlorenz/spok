@@ -11,7 +11,7 @@ import {
   SpokFunctionAny,
 } from './types'
 import { isTestContext, TestContext } from './types-internal'
-import { isRunningAsTestChildProcess } from './utils'
+import { isForcingColor, isRunningAsTestChildProcess } from './utils'
 
 export * from './types'
 import { chaiExpect } from './adapter-chai-expect'
@@ -23,9 +23,13 @@ import { chaiExpect } from './adapter-chai-expect'
 // We hope that this resolves before too many colorless diagnostics were printed.
 let disableColor = true
 ;(function() {
-  isRunningAsTestChildProcess().then((x) => {
-    disableColor = x
-  })
+  if (isForcingColor()) {
+    disableColor = false
+  } else {
+    isRunningAsTestChildProcess().then((x) => {
+      disableColor = x
+    })
+  }
 })()
 
 // only recurse into arrays if they contain actual specs or objects
