@@ -18,12 +18,9 @@
     "isolatedModules": false,
     "sourceMap": true,
     "outDir": "./dist",
-    "lib": [
-      "esnext"
-    ],
-    "allowJs": false
+    "lib": ["esnext"],
+    "allowJs": false,
+    "types": ["node"]
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }
