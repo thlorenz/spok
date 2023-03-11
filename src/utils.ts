@@ -3,8 +3,8 @@ import find from 'find-process'
 // Allow the user to override detection if we can use colors
 const forceColorEnv = process.env.FORCE_COLOR
 export function isForcingColor() {
-  if (forceColorEnv === '1' || forceColorEnv === 'true') return false
-  return true
+  if (forceColorEnv === '1' || forceColorEnv === 'true') return true
+  return false
 }
 
 export async function isRunningAsTestChildProcess() {
