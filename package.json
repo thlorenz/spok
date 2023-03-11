@@ -27,7 +27,8 @@
     "tsc:watch": "tsc -b --watch",
     "lint": "prettier -c src/**/*.ts",
     "lint:fix": "prettier --write src/**/*.ts",
-    "tsd": "tsd"
+    "tsd": "tsd",
+    "doctoc": "doctoc README.md"
   },
   "browser": {
     "./dist/inspect.js": "./dist/inspect-browser.js"
@@ -44,6 +45,7 @@
     "@types/ansicolors": "0.0.31",
     "@types/node": "^18.15.0",
     "@types/tape": "^4.2.33",
+    "doctoc": "^2.2.1",
     "nave": "~2.2.3",
     "prettier": "^1.19.1",
     "tape": "~4.0.0",
