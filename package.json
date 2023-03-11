@@ -30,7 +30,8 @@
     "doctoc": "doctoc README.md"
   },
   "browser": {
-    "./dist/inspect.js": "./dist/inspect-browser.js"
+    "./dist/inspect.js": "./dist/inspect-browser.js",
+    "./dist/utils.js": "./dist/utils-browser.js"
   },
   "repository": {
     "type": "git",
@@ -38,7 +39,8 @@
   },
   "homepage": "https://github.com/thlorenz/spok",
   "dependencies": {
-    "ansicolors": "~0.3.2"
+    "ansicolors": "~0.3.2",
+    "find-process": "^1.4.7"
   },
   "devDependencies": {
     "@types/ansicolors": "0.0.31",
