@@ -1,4 +1,7 @@
 import { ExpectFn } from './adapter-chai-expect'
+import { Assert, TestContext } from './types-internal'
+
+export { Assert } from './types-internal'
 
 export type MatchingSpecs<P> = Partial<
   {
@@ -16,11 +19,6 @@ export type MatchingSpecs<P> = Partial<
   }
 >
 
-export type Assert = {
-  equal(actual: any, expected: any, msg?: string): void
-  deepEqual(actual: any, expected: any, msg?: string): void
-}
-
 type Annotations = {
   $topic?: string
   $spec?: string
@@ -34,7 +32,7 @@ export type Specification<T> = Annotations & {
 }
 
 export type SpokFunction = <T>(
-  t: Assert,
+  t: Assert | TestContext,
   obj: T,
   specifications: Specifications<T>,
   prefix?: string | null

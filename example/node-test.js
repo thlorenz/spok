@@ -1,8 +1,8 @@
-var test = require('tape')
-var spok = require('../').default
+const test = require('node:test')
+const spok = require('../').default
 
 // this would be returned from a function you are testing
-var object = {
+const object = {
   one: 1,
   two: 2,
   three: 3,
@@ -34,7 +34,6 @@ test('my object meets the specifications', function(t) {
     anotherArray: hasThreeElements,
     anObject: spok.ne(undefined),
   })
-  t.end()
 })
 
 test('\n#my object meets the specifications - print description', function(t) {
@@ -52,5 +51,4 @@ test('\n#my object meets the specifications - print description', function(t) {
     anotherArray: hasThreeElements,
     anObject: spok.ne(undefined),
   })
-  t.end()
 })
