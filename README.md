@@ -3,11 +3,13 @@
 Checks a given object against a given set of specifications to keep you from writing boilerplate tests.
 
 ```js
-var test = require('tape')
-var spok = require('spok')
+const test = require('node:test') 
+// or: const test = require('tape') 
+// or: const test = require('tap') 
+const spok = require('spok')
 
 // this would be returned from a function you are testing
-var object = {
+const object = {
     one          : 1
   , two          : 2
   , three        : 3
@@ -25,7 +27,7 @@ function hasThreeElements(a) {
   return a.length === 3
 }
 
-test('my object meets the specifications', function(t) {
+test('my object meets the specifications', (t) => {
   spok(t, object, {
       $topic      : 'spok-example'
     , one          : spok.ge(1)
@@ -39,7 +41,6 @@ test('my object meets the specifications', function(t) {
     , anotherArray : hasThreeElements
     , anObject     : spok.ne(undefined)
   })
-  t.end()
 })
 ```
 
@@ -48,6 +49,25 @@ test('my object meets the specifications', function(t) {
 ## Installation
 
     npm install spok
+
+## Node.js Test Runner
+
+Since Node.js 16.x it includes a built-in [test runner](https://nodejs.org/docs/latest/api/test.html).
+
+Spok support this out of the box as follows:
+
+- it uses the build-in `assert` module to assert the values
+- it uses the passed `t: TestContext` to print diagnostic messages that detail the assertions
+  mad
+
+See [./example/node-test.js](./example/node-test.js) and [./example/node-test-nested.js](./example/node-test-nested.js)for a full examples.
+
+## Tap/Tape
+
+- tap and tape provide a `t` which mirrors the `assert` module and also prints results and the
+  diagnostics message to the console, thus spok uses `t` to perform assertions
+
+See [./example/tape.js](./example/tape.js) and [./example/tape-nested.js](./example/tape-nested.js)for a full examples.
 
 ## Cypress/Chai Expect Support
 
@@ -160,7 +180,7 @@ each provided specification is validated and a test failure caused if one of the
 **Parameters**
 
 -   `t` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** which has assertion functions `equal` and `deepEqual` (to compare objects) - use
-    **tap**, **tape**, **assert** or any other library that has those and thus is compatible
+    **tap**, **tape**, **assert**, **Node.js TestContext** or any other library that has those and thus is compatible
 -   `obj` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the object to verify the specifications against
 -   `specifications` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the specifications to verify
 
