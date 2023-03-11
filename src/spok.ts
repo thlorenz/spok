@@ -15,6 +15,7 @@ import { isForcingColor, isRunningAsTestChildProcess } from './utils'
 
 export * from './types'
 import { chaiExpect } from './adapter-chai-expect'
+import stripAnsi from './strip-ansi'
 
 // When we're running as part of node --test we need to disable colors even if
 // the user them to be on as otherwise TAP output becomes invalid.
@@ -114,12 +115,12 @@ const spokFunction: SpokFunction = <T>(
       const pd = spok.printDescription && spec.$description != null
       if (ps) {
         const extra = '  ' + 'satisfies: ' + spec.$spec
-        msg += color ? colors.brightBlack(extra) : extra
+        msg += color ? colors.brightBlack(extra) : stripAnsi(extra)
       }
       if (pd) {
         msg += color
           ? '  ' + colors.brightBlack(spec.$description)
-          : '  ' + spec.$description
+          : '  ' + stripAnsi(spec.$description)
       }
     }
 
